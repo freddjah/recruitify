@@ -19,7 +19,7 @@
 
 const { Ignitor } = require('@adonisjs/ignitor')
 
-new Ignitor(require('@adonisjs/fold'))
+new Ignitor(require('@adonisjs/fold')) // eslint-disable-line global-require
   .appRoot(__dirname)
   .fireHttpServer()
-  .catch(console.error)
+  .catch(console.error) // eslint-disable-line no-console
