@@ -17,3 +17,6 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+Route.get('register', 'Outside/AuthenticationController.registerForm')
+Route.get('login', 'Outside/AuthenticationController.loginForm')
+Route.post('register', 'Outside/AuthenticationController.register')
