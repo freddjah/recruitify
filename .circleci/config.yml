@@ -6,11 +6,11 @@ jobs:
     steps:
       - checkout
       - run:
-        name: 'Installing dependencies'
-        command: 'npm install'
+          name: 'Installing dependencies'
+          command: 'npm install'
       - run:
-        name: 'Running tests'
-        command: 'node ace test'
+          name: 'Running tests'
+          command: 'node ace test'
 workflows:
   version: 2
   test:
