@@ -1,0 +1,13 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/node:10.15.0-slim
+    steps:
+      - checkout
+      - run: node ace test
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test
