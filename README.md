@@ -29,3 +29,9 @@ Run the following command to run startup migrations.
 ```js
 adonis migration:run
 ```
+
+Inserting test data
+
+```bash
+mysql -u root -p -h 127.0.0.1 recruitify < database/testdata.sql
+```
