@@ -2,10 +2,15 @@ version: 2
 jobs:
   test:
     docker:
-      - image: circleci/node:10.15.0-slim
+      - image: circleci/node:10.15.0
     steps:
       - checkout
-      - run: node ace test
+      - run:
+        name: 'Installing dependencies'
+        command: 'npm install'
+      - run:
+        name: 'Running tests'
+        command: 'node ace test'
 workflows:
   version: 2
   test:
