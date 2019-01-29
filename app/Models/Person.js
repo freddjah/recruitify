@@ -6,7 +6,16 @@ const Hash = use('Hash')
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
-class User extends Model {
+class Person extends Model {
+
+  static get table() {
+    return 'person'
+  }
+
+  static get primaryKey() {
+    return 'person_id'
+  }
+
   static boot() {
     super.boot()
 
@@ -21,6 +30,18 @@ class User extends Model {
     })
   }
 
+  availabilites() {
+    return this.hasMany('App/Models/Availability', 'person_id')
+  }
+
+  competenceProfiles() {
+    return this.hasMany('App/Models/CompetenceProfile', 'person_id')
+  }
+
+  role() {
+    return this.belongsTo('App/Models/Role', 'role_id')
+  }
+
   /**
    * A relationship on tokens is required for auth to
    * work. Since features like `refreshTokens` or
@@ -31,9 +52,11 @@ class User extends Model {
    *
    * @return {Object}
    */
+  /*
   tokens() {
     return this.hasMany('App/Models/Token')
   }
+  */
 }
 
-module.exports = User
+module.exports = Person
