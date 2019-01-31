@@ -1,13 +1,18 @@
 'use strict'
 
+const CompetenceRepository = use('App/Repositories/CompetenceRepository')
+
 class ApplicationController {
 
-  applicationForm({ view }) {
-    view.render('inside.applicant.application.application-form')
+  async applicationForm({ view }) {
+    const competences = await CompetenceRepository.getAll()
+
+    return view.render('inside.applicant.application.application-form', { competences })
   }
 
-  saveApplication({ response }) {
-    response.send('Success')
+  saveApplication({ request, response }) {
+    console.log(request.all())
+    return response.send('Success')
   }
 }
 

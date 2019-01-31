@@ -13,6 +13,23 @@ class Availability extends Model {
     return 'availability_id'
   }
 
+  /**
+   * Database created at column
+   * @returns {null}
+  */
+  static get createdAtColumn() {
+    return null
+  }
+
+  /**
+   * Database updated at column
+   * @returns {null}
+  */
+  static get updatedAtColumn() {
+    return null
+  }
+
+
   person() {
     return this.belongsTo('App/Models/Person', 'person_id')
   }

@@ -12,6 +12,23 @@ class Role extends Model {
   static get primaryKey() {
     return 'role_id'
   }
+
+  /**
+   * Database created at column
+   * @returns {null}
+  */
+  static get createdAtColumn() {
+    return null
+  }
+
+  /**
+   * Database updated at column
+   * @returns {null}
+  */
+  static get updatedAtColumn() {
+    return null
+  }
+
 }
 
 module.exports = Role
