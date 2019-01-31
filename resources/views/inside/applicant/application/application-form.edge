@@ -1,7 +1,7 @@
 @layout('layout')
 
 @section('content')
-  <div class="col-md-10 offset-md-1">
+  <div class="col-md-10 offset-md-1 application-form">
     <h1>Application</h1>
     <form method="POST">
 
@@ -9,6 +9,7 @@
 
       <h2>Expertises</h2>
       <ul id="expertises"></ul>
+      @!component('components.form-error', hasError=hasErrorFor('expertises'), error=getErrorFor('expertises'))
 
       <h4>Add new expertise</h4>
       <div class="row">
