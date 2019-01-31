@@ -11,7 +11,8 @@
       "no-restricted-syntax": 0,
       "no-use-before-define": 0,
       "object-curly-newline": 0,
-      "class-methods-use-this": 0
+      "class-methods-use-this": 0,
+      "max-len": [2, 150]
     },
     "globals": {
       "use": false

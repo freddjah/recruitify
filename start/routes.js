@@ -16,7 +16,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('welcome')
-Route.get('register', 'Outside/AuthenticationController.registerForm')
-Route.get('login', 'Outside/AuthenticationController.loginForm')
-Route.post('register', 'Outside/AuthenticationController.register')
+Route.get('/login', 'Outside/AuthenticationController.loginForm').middleware('guest')
+Route.get('/register', 'Outside/AuthenticationController.registerForm').middleware('guest')
+Route.post('/register', 'Outside/AuthenticationController.register').validator('RegisterPerson').middleware('guest')
+Route.get('/register/done', 'Outside/AuthenticationController.registerDone').middleware('guest')

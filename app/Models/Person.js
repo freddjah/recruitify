@@ -6,16 +6,46 @@ const Hash = use('Hash')
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
 
+/**
+ * Database model for person
+ */
 class Person extends Model {
 
+  /**
+   * Database table
+   * @returns {string}
+  */
   static get table() {
     return 'person'
   }
 
+  /**
+   * Database primary key column
+   * @returns {string}
+  */
   static get primaryKey() {
     return 'person_id'
   }
 
+  /**
+   * Database created at column
+   * @returns {null}
+  */
+  static get createdAtColumn() {
+    return null
+  }
+
+  /**
+   * Database updated at column
+   * @returns {null}
+  */
+  static get updatedAtColumn() {
+    return null
+  }
+
+  /**
+   * Database model boot
+  */
   static boot() {
     super.boot()
 
@@ -30,33 +60,29 @@ class Person extends Model {
     })
   }
 
+  /**
+   * Database model relation for availabilities
+   * @returns {object}
+  */
   availabilites() {
     return this.hasMany('App/Models/Availability', 'person_id')
   }
 
+  /**
+   * Database model relation for competence profiles
+   * @returns {object}
+  */
   competenceProfiles() {
     return this.hasMany('App/Models/CompetenceProfile', 'person_id')
   }
 
+  /**
+   * Database table relation for role
+   * @returns {object}
+  */
   role() {
     return this.belongsTo('App/Models/Role', 'role_id')
   }
-
-  /**
-   * A relationship on tokens is required for auth to
-   * work. Since features like `refreshTokens` or
-   * `rememberToken` will be saved inside the
-   * tokens table.
-   *
-   * @method tokens
-   *
-   * @return {Object}
-   */
-  /*
-  tokens() {
-    return this.hasMany('App/Models/Token')
-  }
-  */
 }
 
 module.exports = Person
