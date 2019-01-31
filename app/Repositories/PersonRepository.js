@@ -3,8 +3,6 @@
 /**
  * Repository for Person
  * Handles functions for database requests
- *
- * @typedef {typeof import('../Models/Person')} PersonModel
  */
 class PersonRepository {
 

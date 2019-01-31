@@ -2,7 +2,15 @@
 
 const { rule } = use('Validator')
 
+/**
+ * Validating registration input fields
+ */
 class RegisterPerson {
+
+  /**
+   * Validation rules
+   * @returns {Object}
+   */
   get rules() {
     return {
       name: 'required',
@@ -21,6 +29,10 @@ class RegisterPerson {
     }
   }
 
+  /**
+   * Custom error messages
+   * @returns {Object}
+   */
   get messages() {
 
     return {
@@ -32,6 +44,10 @@ class RegisterPerson {
     }
   }
 
+  /**
+   * Validating all input fields
+   * @returns {boolean}
+   */
   get validateAll() {
     return true
   }
