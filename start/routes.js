@@ -27,3 +27,5 @@ Route.post('/register', 'Outside/AuthenticationController.register').validator('
 Route.get('/register/done', 'Outside/AuthenticationController.registerDone').middleware('guest')
 
 // Inside
+Route.get('/applicant/application', 'Inside/Applicant/ApplicationController.applicationForm')
+Route.post('/applicant/application', 'Inside/Applicant/ApplicationController.saveApplication')
