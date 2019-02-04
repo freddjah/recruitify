@@ -1,0 +1,29 @@
+@layout('layout')
+
+@section('content')
+  <div class="col-md-10 offset-md-1">
+    <h1>Application Results</h1>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Application Date</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @each(person in persons.rows)
+          <tr>
+            <td>{{ person.name }}</td>
+            <td>{{ person.surname }}</td>
+            <td>Otto</td>
+            <td>
+              <a href="recruiter/applications/{{ person.person_id }}">View application</a>
+            </td>
+          </tr>
+        @endeach
+      </tbody>
+    </table>
+  </div>
+@endsection

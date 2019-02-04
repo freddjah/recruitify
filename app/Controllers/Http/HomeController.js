@@ -10,8 +10,12 @@ class HomeController {
    * @param {Object} ctx
    * @param {Object} ctx.view - Adonis view
    */
-  home({ view }) {
-    return view.render('inside.home')
+  async home({ auth, response }) {
+
+    const person = await auth.getUser()
+    const role = await person.role().fetch()
+
+    return response.redirect(`/${role.name}`)
   }
 }
 

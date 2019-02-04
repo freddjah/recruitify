@@ -30,6 +30,11 @@ class CompetenceProfileRepository {
     const CompetenceProfile = use('App/Models/CompetenceProfile')
     return CompetenceProfile.query().where('person_id', personId).delete()
   }
+
+  static getByCompetenceId(competenceId) {
+    const CompetenceProfile = use('App/Models/CompetenceProfile')
+    return CompetenceProfile.query().where('competence_id', competenceId).fetch()
+  }
 }
 
 module.exports = CompetenceProfileRepository

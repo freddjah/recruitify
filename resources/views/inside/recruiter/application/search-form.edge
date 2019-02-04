@@ -1,0 +1,49 @@
+@layout('layout')
+
+@section('content')
+  <div class="col-md-10 offset-md-1 application-form">
+    <h1>Application</h1>
+    <form method="GET" action="/recruiter/applications/search">
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="availability_from">From</label>
+          <input type="date" class="form-control" id="availability_from" name="from">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="availability_to">To</label>
+          <input type="date" class="form-control" id="availability_to" name="to">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-6">
+          <label for="application_date">Application Date</label>
+          <input type="date" class="form-control" id="application_date" name="date">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="competence">Competence</label>
+          <select class="form-control" id="competence" name="competence">
+              <option value="">Any</option>
+            @each(competence in competences.rows)
+            <option value="{{ competence.competence_id }}">{{ competence.name_sv }}</option>
+            @endeach
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name" name="name">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 text-center mt-5">
+          <button type="submit" id="apply" class="btn btn-primary mr-3">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+@endsection

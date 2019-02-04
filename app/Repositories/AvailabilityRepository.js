@@ -30,6 +30,26 @@ class AvailabilityRepository {
     const Availability = use('App/Models/Availability')
     return Availability.query().where('person_id', personId).delete()
   }
+
+  static getAvailabilitiesByDate(from, to) {
+
+    const Availability = use('App/Models/Availability')
+    let query = Availability.query()
+
+    if (from) {
+      query = query
+        .where('from_date', '<=', from)
+        .where('to_date', '>=', from)
+    }
+
+    if (to) {
+      query = query
+        .where('to_date', '>=', to)
+        .where('from_date', '<=', to)
+    }
+
+    return query.fetch()
+  }
 }
 
 module.exports = AvailabilityRepository

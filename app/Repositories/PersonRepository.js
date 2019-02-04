@@ -32,6 +32,22 @@ class PersonRepository {
       role_id: roleId,
     })
   }
+
+  static getByFilter(name, personIds) {
+
+    const Person = use('App/Models/Person')
+    let query = Person.query()
+
+    if (name) {
+      query = query.whereRaw("CONCAT(name, ' ', surname) = ?", [name])
+    }
+
+    if (personIds) {
+      query = query.whereIn('person_id', personIds)
+    }
+
+    return query.fetch()
+  }
 }
 
 module.exports = PersonRepository

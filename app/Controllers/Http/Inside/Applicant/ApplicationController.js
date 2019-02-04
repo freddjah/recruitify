@@ -81,6 +81,10 @@ async function validateSave({
 
 class ApplicationController {
 
+  index({ response }) {
+    return response.redirect('/applicant/application')
+  }
+
   async applicationForm({ view }) {
     const competences = await CompetenceRepository.getAll()
 

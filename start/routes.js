@@ -27,5 +27,10 @@ Route.post('/register', 'Outside/AuthenticationController.register').validator('
 Route.get('/register/done', 'Outside/AuthenticationController.registerDone').middleware('guest')
 
 // Inside
+Route.get('/applicant', 'Inside/Applicant/ApplicationController.index')
 Route.get('/applicant/application', 'Inside/Applicant/ApplicationController.applicationForm')
 Route.post('/applicant/application', 'Inside/Applicant/ApplicationController.saveApplication')
+
+Route.get('/recruiter', 'Inside/Recruiter/ApplicationController.index')
+Route.get('/recruiter/applications', 'Inside/Recruiter/ApplicationController.searchForm')
+Route.get('/recruiter/applications/search', 'Inside/Recruiter/ApplicationController.searchResults')
