@@ -6,10 +6,12 @@
     <form method="POST">
 
       {{ csrfField() }}
+      @if(flashMessage('confirmation'))
+        <div class="alert alert-success">{{ flashMessage('confirmation') }}</div>
+      @endif
 
       <h2>Expertises</h2>
       <ul id="expertises"></ul>
-      @!component('components.form-error', hasError=hasErrorFor('expertises'), error=getErrorFor('expertises'))
 
       <h4>Add new expertise</h4>
       <div class="row">
@@ -17,7 +19,7 @@
           <label for="competence">Competence</label>
           <select class="form-control" id="competence">
             @each(competence in competences.rows)
-              <option value="{{ competence.competence_id }}">{{ competence.name_sv }}</option>
+            <option value="{{ competence.competence_id }}">{{ competence.name_sv }}</option>
             @endeach
           </select>
         </div>
@@ -31,10 +33,10 @@
           <button id="add_expertise" class="btn btn-secondary" style="margin-top: 32px">Add</button>
         </div>
       </div>
+      @!component('components.form-error', hasError=hasErrorFor('expertises'), error=getErrorFor('expertises'))
 
       <h2>Availabilities</h2>
       <ul id="availabilities"></ul>
-
       <h4>Add new availability</h4>
       <div class="row">
         <div class="form-group col-md-5">
@@ -49,6 +51,7 @@
           <button id="add_availability" class="btn btn-secondary" style="margin-top: 32px">Add</button>
         </div>
       </div>
+      @!component('components.form-error', hasError=hasErrorFor('availabilities'), error=getErrorFor('availabilities'))
       <div class="row">
         <div class="col-md-12 text-center mt-5">
           <button type="submit" id="apply" class="btn btn-primary mr-3">Apply</button>
