@@ -33,20 +33,45 @@ class PersonRepository {
     })
   }
 
-  static getByFilter(name, personIds) {
-
+  static async getPersonBySearchQuery({ from, to, competence, name, date }) {
     const Person = use('App/Models/Person')
-    let query = Person.query()
+
+    const query = Person.query()
+
+    if (from || to) {
+      query
+        .innerJoin('availability', 'person.person_id', 'availability.person_id')
+        .clone()
+    }
+
+    if (from) {
+      query
+        .where('from_date', '<=', from)
+        .where('to_date', '>=', from)
+        .clone()
+    }
+
+    if (to) {
+      query
+        .where('to_date', '>=', to)
+        .where('from_date', '<=', to)
+        .clone()
+    }
+
+    if (competence) {
+      query
+        .innerJoin('competence_profile', 'person.person_id', 'competence_profile.person_id')
+        .where('competence_id', competence)
+        .clone()
+    }
 
     if (name) {
-      query = query.whereRaw("CONCAT(name, ' ', surname) = ?", [name])
+      query
+        .whereRaw("CONCAT(name, ' ', surname) = ?", [name])
+        .clone()
     }
 
-    if (personIds) {
-      query = query.whereIn('person_id', personIds)
-    }
-
-    return query.fetch()
+    return query.select('person.*').fetch()
   }
 }
 
