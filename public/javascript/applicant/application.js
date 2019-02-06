@@ -4,7 +4,8 @@ $(() => {
 
     event.preventDefault()
     const competenceId = $('#competence').val()
-    const competenceName = $('#competence').text()
+    const competenceName = $('#competence option:selected').text()
+
     const yearsOfExperience = $('#years_of_experience').val()
 
     $('#expertises').append(`<li>${competenceName} - ${yearsOfExperience} years</li>`)

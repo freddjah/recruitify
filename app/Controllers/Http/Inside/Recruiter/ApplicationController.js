@@ -27,11 +27,7 @@ class ApplicationController {
     const availabilities = await person.availabilities().fetch()
     const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
 
-    for (const cp of competenceProfiles.rows) {
-      console.log(cp.competence())
-    }
-
-    return view.render('inside.recruiter.application.view', { person, availabilities, competenceProfiles: competenceProfiles.toJSON() })
+    return view.render('inside.recruiter.application.view', { person, availabilities, competenceProfiles })
   }
 }
 

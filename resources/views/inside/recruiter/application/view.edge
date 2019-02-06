@@ -26,8 +26,8 @@
       <div class="col-md-6">
         <h3>Expertises</h3>
         <ul>
-          @each(competenceProfile in competenceProfiles)
-            <li>{{ competenceProfile.competence.name_sv }} - {{ competenceProfile.years_of_experience }}</li>
+          @each(competenceProfile in competenceProfiles.rows)
+            <li>{{ competenceProfile.getRelated('competence').name_sv }} - {{ competenceProfile.years_of_experience }} years</li>
           @endeach
         </ul>
       </div>
