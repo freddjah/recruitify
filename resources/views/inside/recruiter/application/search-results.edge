@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="col-md-10 offset-md-1">
-    <h1>Application Results</h1>
+    <h1>Search results</h1>
     <table class="table table-hover">
       <thead>
         <tr>
@@ -19,11 +19,16 @@
             <td>{{ person.surname }}</td>
             <td></td>
             <td>
-              <a href="/recruiter/applications/{{ person.person_id }}?{{ query }}">View application</a>
+              <a href="/recruiter/applications/{{ person.person_id }}?{{ qs(query) }}">View application</a>
             </td>
           </tr>
         @endeach
       </tbody>
     </table>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      @!component('components.paging', paging=persons.pages, query=query)
+    </div>
   </div>
 @endsection

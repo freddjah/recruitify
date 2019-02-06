@@ -43,7 +43,7 @@ class PersonRepository {
    * @param {Date} searchQuery.date - Application date
    * @returns {Promise<PersonModel[]>} - A promise that can be awaited and resolves into a list of persons
    */
-  static async getPersonBySearchQuery({ from, to, competence, name, date }) {
+  static buildPersonsBySearchQuery({ from, to, competence, name, date }) {
     const Person = use('App/Models/Person')
 
     const query = Person.query()
@@ -81,7 +81,7 @@ class PersonRepository {
         .clone()
     }
 
-    return query.select('person.*').fetch()
+    return query.select('person.*').clone()
   }
 
   static findById(id) {

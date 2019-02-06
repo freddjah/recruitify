@@ -2,6 +2,7 @@
 
 /** @type {import('@adonisjs/framework/src/Server')} */
 const Server = use('Server')
+const View = use('View')
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,11 @@ const serverMiddleware = [
   'Adonis/Middleware/Static',
   'Adonis/Middleware/Cors',
 ]
+
+View.global('qs', (q1 = {}, q2 = {}) => {
+  const params = Object.assign({}, q1, q2)
+  return Object.keys(params).map(key => `${key}=${params[key]}`).join('&')
+})
 
 Server
   .registerGlobal(globalMiddleware)

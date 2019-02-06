@@ -4,15 +4,6 @@ const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
 
 /**
- * Builds query string
- * @param {Object} params
- * @returns {String}
- */
-function buildQuerystring(params) {
-  return Object.keys(params).map(key => `${key}=${params[key]}`).join('&')
-}
-
-/**
  * Controller for handling applications for recruiter
  */
 class ApplicationController {
@@ -44,8 +35,11 @@ class ApplicationController {
    */
   async searchResults({ view, request }) {
 
-    const persons = await PersonRepository.getPersonBySearchQuery(request.get())
-    const query = buildQuerystring(request.get())
+    const params = request.get()
+    const searchQuery = PersonRepository.buildPersonsBySearchQuery(params)
+    const currentPage = params.page
+    const persons = await searchQuery.paginate(currentPage, 10)
+    const query = request.get()
 
     return view.render('inside.recruiter.application.search-results', { persons, query })
   }
@@ -62,7 +56,7 @@ class ApplicationController {
     const person = await PersonRepository.findById(params.personId)
     const availabilities = await person.availabilities().fetch()
     const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
-    const query = buildQuerystring(request.get())
+    const query = request.get()
 
     return view.render('inside.recruiter.application.view', { person, availabilities, competenceProfiles, query })
   }
