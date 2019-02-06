@@ -4,7 +4,15 @@ const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const AvailabilityRepository = use('App/Repositories/AvailabilityRepository')
 const CompetenceProfileRepository = use('App/Repositories/CompetenceProfileRepository')
 
-
+/**
+ * Handles validation of application
+ * @param {Object} fields
+ * @param {Object} fields.expertiseCompetenceId - Expertise competence id
+ * @param {Object} fields.expertiseYearsOfExperience - Expertise years of experience
+ * @param {Object} fields.availabilityFrom - Availability from date
+ * @param {Object} fields.availabilityTo - Availability to date
+ * @returns {Object}
+ */
 function validateRequiredFields({
   expertiseCompetenceId,
   expertiseYearsOfExperience,
@@ -33,6 +41,15 @@ function validateRequiredFields({
   return errors
 }
 
+/**
+ * Validates application before save
+ * @param {Object} fields
+ * @param {Object} fields.expertise_competence_id - Expertise competence id
+ * @param {Object} fields.expertise_years_of_experience - Expertise years of experience
+ * @param {Object} fields.availability_from - Availability from date
+ * @param {Object} fields.availability_to - Availability to date
+ * @returns {Object}
+ */
 async function validateSave({
   expertise_competence_id: expertiseCompetenceId = [],
   expertise_years_of_experience: expertiseYearsOfExperience = [],
@@ -78,23 +95,42 @@ async function validateSave({
 
   return errors
 }
-
+/**
+ * Controller for handling applications for applicant
+ */
 class ApplicationController {
 
+  /**
+   * Redirects user to /applicant/application
+   * @param {Object} ctx
+   * @param {Object} ctx.response - Adonis response
+   */
   index({ response }) {
     return response.redirect('/applicant/application')
   }
 
+  /**
+   * Displays application form
+   * @param {Object} ctx
+   * @param {Object} ctx.view - Adonis view
+   */
   async applicationForm({ view }) {
     const competences = await CompetenceRepository.getAll()
 
     return view.render('inside.applicant.application.application-form', { competences })
   }
 
+  /**
+   * Handle application form request. Creates new application
+   * @param {Object} ctx
+   * @param {Object} ctx.request - Adonis request
+   * @param {Object} ctx.response - Adonis response
+   * @param {Object} ctx.session - Adonis session
+   * @param {Object} ctx.auth - Adonis auth
+   */
   async saveApplication({ request, response, session, auth }) {
 
     const errors = await validateSave(request.all())
-    console.log('errors', errors)
 
     if (Object.keys(errors).length > 0) {
 

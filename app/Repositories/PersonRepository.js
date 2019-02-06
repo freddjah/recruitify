@@ -33,6 +33,16 @@ class PersonRepository {
     })
   }
 
+  /**
+   * Get list of persons by search query params
+   * @param {Object} searchQuery
+   * @param {Date} searchQuery.from - From date
+   * @param {Date} searchQuery.to - To date
+   * @param {Number} searchQuery.competence - Competence id
+   * @param {String} searchQuery.name - Name
+   * @param {Date} searchQuery.date - Application date
+   * @returns {Promise<PersonModel[]>} - A promise that can be awaited and resolves into a list of persons
+   */
   static async getPersonBySearchQuery({ from, to, competence, name, date }) {
     const Person = use('App/Models/Person')
 
@@ -67,7 +77,7 @@ class PersonRepository {
 
     if (name) {
       query
-        .whereRaw("CONCAT(name, ' ', surname) = ?", [name])
+        .whereRaw("CONCAT(name, ' ', surname) LIKE ?", [`%${name}%`])
         .clone()
     }
 

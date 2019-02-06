@@ -19,19 +19,26 @@ const Route = use('Route')
 Route.get('/', 'HomeController.home').middleware('auth')
 
 // Outside
-Route.get('/login', 'Outside/AuthenticationController.loginForm').middleware('guest')
-Route.post('/login', 'Outside/AuthenticationController.login').middleware('guest')
 Route.get('/logout', 'Outside/AuthenticationController.logout')
-Route.get('/register', 'Outside/AuthenticationController.registerForm').middleware('guest')
-Route.post('/register', 'Outside/AuthenticationController.register').validator('RegisterPerson').middleware('guest')
-Route.get('/register/done', 'Outside/AuthenticationController.registerDone').middleware('guest')
+
+Route.group(() => {
+  Route.get('/login', 'Outside/AuthenticationController.loginForm')
+  Route.post('/login', 'Outside/AuthenticationController.login')
+  Route.get('/register', 'Outside/AuthenticationController.registerForm')
+  Route.post('/register', 'Outside/AuthenticationController.register').validator('RegisterPerson')
+  Route.get('/register/done', 'Outside/AuthenticationController.registerDone')
+}).middleware('guest')
 
 // Inside
-Route.get('/applicant', 'Inside/Applicant/ApplicationController.index')
-Route.get('/applicant/application', 'Inside/Applicant/ApplicationController.applicationForm')
-Route.post('/applicant/application', 'Inside/Applicant/ApplicationController.saveApplication')
+Route.group(() => {
+  Route.get('/', 'Inside/Applicant/ApplicationController.index')
+  Route.get('application', 'Inside/Applicant/ApplicationController.applicationForm')
+  Route.post('application', 'Inside/Applicant/ApplicationController.saveApplication')
+}).prefix('/applicant').middleware(['auth', 'role:applicant'])
 
-Route.get('/recruiter', 'Inside/Recruiter/ApplicationController.index')
-Route.get('/recruiter/applications', 'Inside/Recruiter/ApplicationController.searchForm')
-Route.get('/recruiter/applications/search', 'Inside/Recruiter/ApplicationController.searchResults')
-Route.get('/recruiter/applications/:personId', 'Inside/Recruiter/ApplicationController.view')
+Route.group(() => {
+  Route.get('/', 'Inside/Recruiter/ApplicationController.index')
+  Route.get('applications', 'Inside/Recruiter/ApplicationController.searchForm')
+  Route.get('applications/search', 'Inside/Recruiter/ApplicationController.searchResults')
+  Route.get('applications/:personId', 'Inside/Recruiter/ApplicationController.view')
+}).prefix('/recruiter').middleware(['auth', 'role:recruiter'])

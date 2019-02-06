@@ -25,15 +25,15 @@ class CompetenceProfileRepository {
     })
   }
 
+  /**
+   * Deletes competence profile by person id
+   * @param {number} personId
+   * @returns {Promise<void>} - A promise that can be awaited.
+   */
   static deleteByPersonId(personId) {
 
     const CompetenceProfile = use('App/Models/CompetenceProfile')
     return CompetenceProfile.query().where('person_id', personId).delete()
-  }
-
-  static getByCompetenceId(competenceId) {
-    const CompetenceProfile = use('App/Models/CompetenceProfile')
-    return CompetenceProfile.query().where('competence_id', competenceId).fetch()
   }
 }
 

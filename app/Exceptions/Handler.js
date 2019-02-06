@@ -47,6 +47,10 @@ class ExceptionHandler extends BaseExceptionHandler {
       return response.status(404).send(view.render('errors.404'))
     }
 
+    if (error.name === 'UnauthorizedException') {
+      return response.status(401).send(view.render('errors.401'))
+    }
+
     return super.handle(...arguments) // eslint-disable-line prefer-rest-params
   }
 
