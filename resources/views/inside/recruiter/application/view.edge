@@ -1,0 +1,49 @@
+@layout('layout')
+
+@section('content')
+  <div class="col-md-10 offset-md-1">
+    <h1>Application</h1>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <h3>Status</h3>
+        <select class="form-control" id="status" name="status">
+          <option value="">Unhandled</option>
+          <option value="">Rejected</option>
+          <option value="">Accepted</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <h3>Personal info</h3>
+        <p>
+          Name: {{ person.name }} {{ person.surname }} <br>
+          SSN: {{ person.ssn }} <br>
+          Email: {{ person.email }} <br>
+          Username: {{ person.username }} <br>
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>Expertises</h3>
+        <ul>
+          @each(competenceProfile in competenceProfiles)
+            <li>{{ competenceProfile.competence.name_sv }} - {{ competenceProfile.years_of_experience }}</li>
+          @endeach
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h3>Available</h3>
+        <ul>
+          @each( availability in availabilities.rows)
+            <li>{{ availability.from_date }} - {{ availability.to_date }}</li>
+          @endeach
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center mt-5">
+        <a href="back" class="btn btn-primary mr-3">Back to search</a>
+      </div>
+    </div>
+  </div>
+@endsection

@@ -64,7 +64,7 @@ class Person extends Model {
    * Database model relation for availabilities
    * @returns {object}
   */
-  availabilites() {
+  availabilities() {
     return this.hasMany('App/Models/Availability', 'person_id')
   }
 

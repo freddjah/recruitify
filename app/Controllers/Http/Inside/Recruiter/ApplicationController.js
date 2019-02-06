@@ -21,8 +21,17 @@ class ApplicationController {
     return view.render('inside.recruiter.application.search-results', { persons })
   }
 
-  viewApplication({ view }) {
-    return view.render('inside.recruiter.application.view-application')
+  async view({ view, params }) {
+
+    const person = await PersonRepository.findById(params.personId)
+    const availabilities = await person.availabilities().fetch()
+    const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
+
+    for (const cp of competenceProfiles.rows) {
+      console.log(cp.competence())
+    }
+
+    return view.render('inside.recruiter.application.view', { person, availabilities, competenceProfiles: competenceProfiles.toJSON() })
   }
 }
 

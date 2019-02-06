@@ -34,3 +34,4 @@ Route.post('/applicant/application', 'Inside/Applicant/ApplicationController.sav
 Route.get('/recruiter', 'Inside/Recruiter/ApplicationController.index')
 Route.get('/recruiter/applications', 'Inside/Recruiter/ApplicationController.searchForm')
 Route.get('/recruiter/applications/search', 'Inside/Recruiter/ApplicationController.searchResults')
+Route.get('/recruiter/applications/:personId', 'Inside/Recruiter/ApplicationController.view')

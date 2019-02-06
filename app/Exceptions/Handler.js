@@ -2,6 +2,19 @@
 
 const BaseExceptionHandler = use('BaseExceptionHandler')
 
+function is404Error(error) {
+
+  if (error.name === 'ModelNotFoundException') {
+    return true
+  }
+
+  if (error.name === 'HttpException' && error.code === 'E_ROUTE_NOT_FOUND') {
+    return true
+  }
+
+  return false
+}
+
 /**
  * This class handles all exceptions thrown during
  * the HTTP request lifecycle.
@@ -20,7 +33,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async handle(error, { request, response, session }) {
+  async handle(error, { request, response, session, view }) {
 
     if (error.name === 'InvalidSessionException') {
 
@@ -28,6 +41,10 @@ class ExceptionHandler extends BaseExceptionHandler {
       session.commit()
 
       return response.redirect('/login')
+    }
+
+    if (is404Error(error)) {
+      return response.status(404).send(view.render('errors.404'))
     }
 
     return super.handle(...arguments) // eslint-disable-line prefer-rest-params

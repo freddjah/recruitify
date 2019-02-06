@@ -73,6 +73,12 @@ class PersonRepository {
 
     return query.select('person.*').fetch()
   }
+
+  static findById(id) {
+    const Person = use('App/Models/Person')
+
+    return Person.findOrFail(id)
+  }
 }
 
 module.exports = PersonRepository
