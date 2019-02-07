@@ -43,10 +43,15 @@ class PersonRepository {
    * @param {Date} searchQuery.date - Application date
    * @returns {Promise<PersonModel[]>} - A promise that can be awaited and resolves into a list of persons
    */
-  static buildPersonsBySearchQuery({ from, to, competence, name, date }) {
+  static buildPersonsBySearchQuery({ from, to, competence, name, date, roleId }) {
     const Person = use('App/Models/Person')
 
     const query = Person.query()
+
+    if (roleId) {
+      query
+        .where('role_id', roleId)
+    }
 
     if (from || to) {
       query

@@ -24,7 +24,7 @@ class AuthenticationController {
    */
   async register({ request, response }) {
 
-    await PersonRepository.create({ ...request.all(), roleId: 1 })
+    await PersonRepository.create({ ...request.all(), roleId: 2 })
     return response.redirect('/register/done')
   }
 
