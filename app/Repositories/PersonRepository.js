@@ -86,6 +86,12 @@ class PersonRepository {
         .clone()
     }
 
+    if (date) {
+      query
+        .where('application_date', date)
+        .clone()
+    }
+
     return query.select('person.*').clone()
   }
 
@@ -93,6 +99,12 @@ class PersonRepository {
     const Person = use('App/Models/Person')
 
     return Person.findOrFail(id)
+  }
+
+  static async update(person, data) {
+    person.merge(data)
+    await person.save()
+    return person
   }
 }
 

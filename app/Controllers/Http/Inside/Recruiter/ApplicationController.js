@@ -1,5 +1,7 @@
 'use strict'
 
+const moment = require('moment')
+
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
 
@@ -59,6 +61,21 @@ class ApplicationController {
     const query = request.get()
 
     return view.render('inside.recruiter.application.view', { person, availabilities, competenceProfiles, query })
+  }
+
+  async updateStatus({ request, response, params, session }) {
+
+    const form = request.post()
+    const person = await PersonRepository.findById(params.personId)
+
+    await PersonRepository.update(person, {
+      application_status: form.applicationStatus,
+      application_reviewed_at: moment().format('YYYY-MM-DD hh:mm:ss'),
+    })
+
+    session.flash({ success: 'Successfully updated application' })
+
+    return response.redirect('back')
   }
 }
 

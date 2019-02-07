@@ -1,8 +1,11 @@
 'use strict'
 
+const moment = require('moment')
+
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const AvailabilityRepository = use('App/Repositories/AvailabilityRepository')
 const CompetenceProfileRepository = use('App/Repositories/CompetenceProfileRepository')
+const PersonRepository = use('App/Repositories/PersonRepository')
 
 /**
  * Handles validation of application
@@ -138,6 +141,12 @@ class ApplicationController {
       return response.redirect('back')
     }
     const person = await auth.getUser()
+
+    await PersonRepository.update(person, {
+      application_date: moment().format('YYYY-MM-DD'),
+      application_status: 'unhandled',
+      application_reviewed_at: null,
+    })
 
     await AvailabilityRepository.deleteByPersonId(person.person_id)
     await CompetenceProfileRepository.deleteByPersonId(person.person_id)
