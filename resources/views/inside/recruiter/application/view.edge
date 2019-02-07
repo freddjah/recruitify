@@ -50,7 +50,7 @@
         <h3>Available</h3>
         <ul>
           @each( availability in availabilities.rows)
-            <li>{{ availability.from_date }} - {{ availability.to_date }}</li>
+            <li>{{ antl.formatDate(availability.from_date) }} - {{ antl.formatDate(availability.to_date) }}</li>
           @endeach
         </ul>
       </div>

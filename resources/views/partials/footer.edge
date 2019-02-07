@@ -5,6 +5,30 @@
         <h5>&copy; Recruitify</h3>
         <p>Made with <3 in Stockholm</p>
       </div>
+
+      <div class="col-md-12 text-center">
+        @if(antl.currentLocale() === 'sv')
+          Swedish
+        @else
+          <a href="?locale=sv">Swedish</a>
+        @endif
+
+        |
+
+        @if(antl.currentLocale() === 'en')
+          English (American)
+        @else
+          <a href="?locale=en">English (American)</a>
+        @endif
+
+        |
+
+        @if(antl.currentLocale() === 'en-gb')
+          English (UK)
+        @else
+          <a href="?locale=en-gb">English (UK)</a>
+        @endif
+      </div>
     </div>
   </div>
 </footer>

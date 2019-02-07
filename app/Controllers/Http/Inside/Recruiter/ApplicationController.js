@@ -25,6 +25,7 @@ class ApplicationController {
    * @param {Object} ctx.view - Adonis view
    */
   async searchForm({ view }) {
+
     const competences = await CompetenceRepository.getAll()
     return view.render('inside.recruiter.application.search-form', { competences })
   }

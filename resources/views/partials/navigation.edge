@@ -11,7 +11,7 @@
     <ul class="navbar-nav">
       @loggedIn
         <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
+          <a class="nav-link" href="/logout">{{ antl.formatMessage('navigation.logout') }}</a>
         </li>
       @else
         <li class="nav-item">
