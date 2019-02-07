@@ -59,8 +59,9 @@ class ApplicationController {
     const availabilities = await person.availabilities().fetch()
     const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
     const query = request.get()
+    const reviewTime = moment().format('YYYY-MM-DD HH:mm:ss')
 
-    return view.render('inside.recruiter.application.view', { person, availabilities, competenceProfiles, query })
+    return view.render('inside.recruiter.application.view', { person, availabilities, competenceProfiles, query, reviewTime })
   }
 
   async updateStatus({ request, response, params, session }) {
@@ -70,7 +71,7 @@ class ApplicationController {
 
     await PersonRepository.update(person, {
       application_status: form.applicationStatus,
-      application_reviewed_at: moment().format('YYYY-MM-DD hh:mm:ss'),
+      application_reviewed_at: moment().format('YYYY-MM-DD HH:mm:ss'),
     })
 
     session.flash({ success: 'Successfully updated application' })

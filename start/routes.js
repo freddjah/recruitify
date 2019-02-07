@@ -41,5 +41,5 @@ Route.group(() => {
   Route.get('applications', 'Inside/Recruiter/ApplicationController.searchForm')
   Route.get('applications/search', 'Inside/Recruiter/ApplicationController.searchResults')
   Route.get('applications/:personId', 'Inside/Recruiter/ApplicationController.view')
-  Route.post('applications/:personId', 'Inside/Recruiter/ApplicationController.updateStatus')
+  Route.post('applications/:personId', 'Inside/Recruiter/ApplicationController.updateStatus').middleware('updateStatusValidator')
 }).prefix('/recruiter').middleware(['auth', 'role:recruiter'])

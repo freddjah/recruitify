@@ -42,6 +42,7 @@ const namedMiddleware = {
   auth: 'Adonis/Middleware/Auth',
   guest: 'Adonis/Middleware/AllowGuestOnly',
   role: 'App/Middleware/Role',
+  updateStatusValidator: 'App/Middleware/Validators/UpdateStatusValidator',
 }
 
 /*

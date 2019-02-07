@@ -46,7 +46,7 @@ class PersonRepository {
   static buildPersonsBySearchQuery({ from, to, competence, name, date, roleId }) {
     const Person = use('App/Models/Person')
 
-    const query = Person.query()
+    const query = Person.query().whereNotNull('application_date')
 
     if (roleId) {
       query
