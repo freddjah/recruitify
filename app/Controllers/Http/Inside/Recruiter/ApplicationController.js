@@ -36,7 +36,7 @@ class ApplicationController {
   async searchResults({ view, request }) {
 
     const params = request.get()
-    const searchQuery = PersonRepository.buildPersonsBySearchQuery(params)
+    const searchQuery = PersonRepository.buildPersonsBySearchQuery({ ...params, roleId: 2 })
     const currentPage = params.page
     const persons = await searchQuery.paginate(currentPage, 10)
     const query = request.get()

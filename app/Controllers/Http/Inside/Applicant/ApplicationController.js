@@ -144,7 +144,7 @@ class ApplicationController {
 
     const data = request.all()
 
-    for (const index in data.expertiseCompetenceId) {
+    for (const index in data.expertise_competence_id) {
 
       await CompetenceProfileRepository.create({
         personId: person.person_id,
