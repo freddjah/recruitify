@@ -9,8 +9,8 @@ $(() => {
     const yearsOfExperience = $('#years_of_experience').val()
 
     $('#expertises').append(`<li>${competenceName} - ${yearsOfExperience} years</li>`)
-    $('form').append(`<input type="hidden" name="expertise_competence_id[]" value="${competenceId}">`)
-    $('form').append(`<input type="hidden" name="expertise_years_of_experience[]" value="${yearsOfExperience}">`)
+    $('form').append(`<input type="hidden" name="expertiseCompetenceId[]" value="${competenceId}">`)
+    $('form').append(`<input type="hidden" name="expertiseYearsOfExperience[]" value="${yearsOfExperience}">`)
   })
 
   $('#add_availability').click(event => {
@@ -20,7 +20,7 @@ $(() => {
     const availabilityTo = $('#availability_to').val()
 
     $('#availabilities').append(`<li>${availabilityFrom} to ${availabilityTo}</li>`)
-    $('form').append(`<input type="hidden" name="availability_from[]" value="${availabilityFrom}">`)
-    $('form').append(`<input type="hidden" name="availability_to[]" value="${availabilityTo}">`)
+    $('form').append(`<input type="hidden" name="availabilityFrom[]" value="${availabilityFrom}">`)
+    $('form').append(`<input type="hidden" name="availabilityTo[]" value="${availabilityTo}">`)
   })
 })

@@ -33,7 +33,7 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/', 'Inside/Applicant/ApplicationController.index')
   Route.get('application', 'Inside/Applicant/ApplicationController.applicationForm')
-  Route.post('application', 'Inside/Applicant/ApplicationController.saveApplication')
+  Route.post('application', 'Inside/Applicant/ApplicationController.saveApplication').middleware('createApplicationValidator')
 }).prefix('/applicant').middleware(['auth', 'role:applicant'])
 
 Route.group(() => {
