@@ -40,7 +40,7 @@ class ApplicationController {
    * @param {Object} ctx.session - Adonis session
    * @param {Object} ctx.auth - Adonis auth
    */
-  async saveApplication({ request, response, session, auth }) {
+  async saveApplication({ request, response, session, auth, antl }) {
 
     const person = await auth.getUser()
 
@@ -72,7 +72,7 @@ class ApplicationController {
         toDate: form.availabilityTo[index],
       })
     }
-    session.flash({ confirmation: 'You have successfully applied. Do not call us. We will call you' })
+    session.flash({ confirmation: antl.formatMessage('applicant.flashMessage') })
     return response.redirect('back')
   }
 }

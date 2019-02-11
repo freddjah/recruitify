@@ -1,0 +1,16 @@
+{
+  "header": "Application",
+  "expertiseHeader": "Expertises",
+  "competencenHeader": "Competence",
+  "addExpertiseHeader": "Add new expertise",
+  "yearsOfExperienceHeader": "Experience (years)",
+  "addExpertiseButton": "Add",
+  "availabilityHeader": "Availability",
+  "addAvailabilityHeader": "Add new expertise",
+  "fromHeader": "From",
+  "toHeader": "To",
+  "addAvailabilityButton": "Add",
+  "applyButton": "Apply",
+  "cancelButton": "Cancel",
+  "flashMessage": "You have successfully applied. Do not call us. We will call you"
+}
