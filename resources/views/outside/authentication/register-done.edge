@@ -2,7 +2,7 @@
 
 @section('content')
   <div class="col-md-6 offset-md-3">
-    <h1>Success</h1>
-    <p>Your account was created. Go to <a href="/login">login</a></p>
+    <h1>{{ antl.formatMessage('authentication.registerDoneSuccess') }}</h1>
+    <p>{{ antl.formatMessage('authentication.registerDoneMessage') }} <a href="/login">{{ antl.formatMessage('authentication.registerDoneLoginLink') }}</a>.</p>
   </div>
 @endsection
