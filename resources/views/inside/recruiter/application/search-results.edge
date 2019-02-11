@@ -2,13 +2,13 @@
 
 @section('content')
   <div class="col-md-10 offset-md-1">
-    <h1>Search results</h1>
+    <h1>{{ antl.formatMessage('recruiter.searchResultsHeader') }}</h1>
     <table class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col">Application Date</th>
+          <th scope="col">{{ antl.formatMessage('recruiter.firstName') }}</th>
+          <th scope="col">{{ antl.formatMessage('recruiter.lastName') }}</th>
+          <th scope="col">{{ antl.formatMessage('recruiter.applicationDate') }}</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -19,7 +19,7 @@
             <td>{{ person.surname }}</td>
             <td>{{ antl.formatDate(person.application_date) }}</td>
             <td>
-              <a href="/recruiter/applications/{{ person.person_id }}?{{ qs(query) }}">View application</a>
+              <a href="/recruiter/applications/{{ person.person_id }}?{{ qs(query) }}">{{ antl.formatMessage('recruiter.viewApplication') }}</a>
             </td>
           </tr>
         @endeach

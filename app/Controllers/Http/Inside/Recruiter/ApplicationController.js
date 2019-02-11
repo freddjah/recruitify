@@ -65,7 +65,7 @@ class ApplicationController {
     return view.render('inside.recruiter.application.view', { person, availabilities, competenceProfiles, query, reviewTime })
   }
 
-  async updateStatus({ request, response, params, session }) {
+  async updateStatus({ request, response, params, session, antl }) {
 
     const form = request.post()
     const person = await PersonRepository.findById(params.personId)
@@ -75,7 +75,7 @@ class ApplicationController {
       application_reviewed_at: moment().format('YYYY-MM-DD HH:mm:ss'),
     })
 
-    session.flash({ success: 'Successfully updated application' })
+    session.flash({ success: antl.formatMessage('recruiter.updateFlashMessage') })
 
     return response.redirect('back')
   }

@@ -28,7 +28,6 @@ class ApplicationController {
    */
   async applicationForm({ view }) {
     const competences = await CompetenceRepository.getAll()
-
     return view.render('inside.applicant.application.application-form', { competences })
   }
 
@@ -64,7 +63,7 @@ class ApplicationController {
       })
     }
 
-    for (const index in form.availability_from) {
+    for (const index in form.availabilityFrom) {
 
       await AvailabilityRepository.create({
         personId: person.person_id,
