@@ -2,53 +2,53 @@
 
 @section('content')
   <div class="col-md-6 offset-md-3">
-    <h1>Register</h1>
+    <h1>{{ antl.formatMessage('authentication.registerFormTitle') }}</h1>
     <form method="POST">
 
       {{ csrfField() }}
 
       <div class="form-group">
-        <label for="name">First name</label>
-      <input type="text" class="form-control {{ hasErrorFor('name') ? 'is-invalid' : '' }}" name="name" id="name" placeholder="Enter first name" value="{{ old('name') }}" required>
+        <label for="name">{{ antl.formatMessage('authentication.registerFormFirstName') }}</label>
+      <input type="text" class="form-control {{ hasErrorFor('name') ? 'is-invalid' : '' }}" name="name" id="name" placeholder="{{ antl.formatMessage('authentication.registerFormFirstNamePlaceholder') }}" value="{{ old('name') }}" required>
         @!component('components.form-error', hasError=hasErrorFor('name'), error=getErrorFor('name'))
       </div>
 
       <div class="form-group">
-        <label for="surname">Last name</label>
-        <input type="text" class="form-control {{ hasErrorFor('surname') ? 'is-invalid' : '' }}" name="surname" id="surname" placeholder="Enter last name" value="{{ old('surname') }}" required>
+        <label for="surname">{{ antl.formatMessage('authentication.registerFormLastName') }}</label>
+        <input type="text" class="form-control {{ hasErrorFor('surname') ? 'is-invalid' : '' }}" name="surname" id="surname" placeholder="{{ antl.formatMessage('authentication.registerFormLastNamePlaceholder') }}" value="{{ old('surname') }}" required>
         @!component('components.form-error', hasError=hasErrorFor('surname'), error=getErrorFor('surname'))
       </div>
 
       <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control {{ hasErrorFor('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="Enter email" value="{{ old('email') }}" required>
+        <label for="email">{{ antl.formatMessage('authentication.registerFormEmail') }}</label>
+        <input type="email" class="form-control {{ hasErrorFor('email') ? 'is-invalid' : '' }}" name="email" id="email" placeholder="{{ antl.formatMessage('authentication.registerFormEmailPlaceholder') }}" value="{{ old('email') }}" required>
         @!component('components.form-error', hasError=hasErrorFor('email'), error=getErrorFor('email'))
       </div>
 
       <div class="form-group">
-        <label for="ssn">Date of birth</label>
-        <input type="text" class="form-control {{ hasErrorFor('ssn') ? 'is-invalid' : '' }}" name="ssn" id="ssn" placeholder="Enter date of birth (YYYYMMDD-XXXX)" value="{{ old('ssn') }}" required>
+        <label for="ssn">{{ antl.formatMessage('authentication.registerFormDateBirth') }}</label>
+        <input type="text" class="form-control {{ hasErrorFor('ssn') ? 'is-invalid' : '' }}" name="ssn" id="ssn" placeholder="{{ antl.formatMessage('authentication.registerFormDateBirthPlaceholder') }}" value="{{ old('ssn') }}" required>
         @!component('components.form-error', hasError=hasErrorFor('ssn'), error=getErrorFor('ssn'))
       </div>
 
       <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control {{ hasErrorFor('username') ? 'is-invalid' : '' }}" name="username" id="username" placeholder="Enter username" value="{{ old('username') }}" required>
+        <label for="username">{{ antl.formatMessage('authentication.registerFormUsername') }}</label>
+        <input type="text" class="form-control {{ hasErrorFor('username') ? 'is-invalid' : '' }}" name="username" id="username" placeholder="{{ antl.formatMessage('authentication.registerFormUsernamePlaceholder') }}" value="{{ old('username') }}" required>
         @!component('components.form-error', hasError=hasErrorFor('username'), error=getErrorFor('username'))
       </div>
 
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control {{ hasErrorFor('password') ? 'is-invalid' : '' }}" name="password" id="password" placeholder="Enter password" required>
+        <label for="password">{{ antl.formatMessage('authentication.registerFormPassword') }}</label>
+        <input type="password" class="form-control {{ hasErrorFor('password') ? 'is-invalid' : '' }}" name="password" id="password" placeholder="{{ antl.formatMessage('authentication.registerFormPasswordPlaceholder') }}" required>
         @!component('components.form-error', hasError=hasErrorFor('password'), error=getErrorFor('password'))
       </div>
 
       <div class="form-group">
-        <label for="password_confirmation">Confirm password</label>
-        <input type="password" class="form-control {{ hasErrorFor('password_confirmation') ? 'is-invalid' : '' }}" name="password_confirmation" id="password_confirmation" placeholder="Enter password again" required>
+        <label for="password_confirmation">{{ antl.formatMessage('authentication.registerFormConfirmPassword') }}</label>
+        <input type="password" class="form-control {{ hasErrorFor('password_confirmation') ? 'is-invalid' : '' }}" name="password_confirmation" id="password_confirmation" placeholder="{{ antl.formatMessage('authentication.registerFormConfirmPasswordPlaceholder') }}" required>
         @!component('components.form-error', hasError=hasErrorFor('password_confirmation'), error=getErrorFor('password_confirmation'))
       </div>
-      <button type="submit" class="btn btn-primary">Register account</button>
+      <button type="submit" class="btn btn-primary">{{ antl.formatMessage('authentication.registerFormRegisterAccount') }}</button>
     </form>
   </div>
 @endsection

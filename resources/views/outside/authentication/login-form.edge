@@ -2,24 +2,24 @@
 
 @section('content')
   <div class="col-md-6 offset-md-3">
-    <h1>Login</h1>
+    <h1>{{ antl.formatMessage('authentication.loginFormTitle') }}</h1>
     <form method="POST">
 
       {{ csrfField() }}
 
       <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" class="form-control {{ hasErrorFor('username') ? 'is-invalid' : '' }}" name="username" id="username" placeholder="Enter username" value="{{ old('username') }}" required>
+        <label for="username">{{ antl.formatMessage('authentication.loginFormUsername') }}</label>
+        <input type="text" class="form-control {{ hasErrorFor('username') ? 'is-invalid' : '' }}" name="username" id="username" placeholder="{{ antl.formatMessage('authentication.loginFormUsernamePlaceholder') }}" value="{{ old('username') }}" required>
         @!component('components.form-error', hasError=hasErrorFor('username'), error=getErrorFor('username'))
       </div>
 
       <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control {{ hasErrorFor('password') ? 'is-invalid' : '' }}" name="password" id="password" placeholder="Enter password" required>
+        <label for="password">{{ antl.formatMessage('authentication.loginFormPassword') }}</label>
+        <input type="password" class="form-control {{ hasErrorFor('password') ? 'is-invalid' : '' }}" name="password" id="password" placeholder="{{ antl.formatMessage('authentication.loginFormPasswordPlaceholder') }}" required>
         @!component('components.form-error', hasError=hasErrorFor('password'), error=getErrorFor('password'))
       </div>
 
-      <button type="submit" class="btn btn-primary">Login</button>
+      <button type="submit" class="btn btn-primary">{{ antl.formatMessage('authentication.loginFormLogin') }}</button>
     </form>
   </div>
 @endsection
