@@ -42,7 +42,7 @@
         <h3>Expertises</h3>
         <ul>
           @each(competenceProfile in competenceProfiles.rows)
-            <li>{{ competenceProfile.getRelated('competence').name_sv }} - {{ competenceProfile.years_of_experience }} years</li>
+            <li>{{ competenceProfile.getRelated('competence')['name_' + currentLocale] }} - {{ competenceProfile.years_of_experience }} years</li>
           @endeach
         </ul>
       </div>

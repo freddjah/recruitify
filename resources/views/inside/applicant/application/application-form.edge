@@ -19,7 +19,7 @@
           <label for="competence">Competence</label>
           <select class="form-control" id="competence">
             @each(competence in competences.rows)
-            <option value="{{ competence.competence_id }}">{{ competence.name_sv }}</option>
+            <option value="{{ competence.competence_id }}">{{ competence['name_' + currentLocale] }}</option>
             @endeach
           </select>
         </div>
