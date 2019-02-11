@@ -1,0 +1,8 @@
+{
+  "401Header": "Unauthorised",
+  "401Text": "You are not allowed to view this page.",
+  "404Header": "Not found",
+  "404Text": "The page you are looking for does not exist.",
+  "500Header": "Something went wrong",
+  "500Text": "We are looking into the issue. Please try again."
+}

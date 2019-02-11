@@ -1,0 +1,8 @@
+{
+  "401Header": "Obehörig",
+  "401Text": "Du är inte tillåten att se den här sidan.",
+  "404Header": "Sidan saknas",
+  "404Text": "Sidan du letar efter finns inte.",
+  "500Header": "Något gick fel",
+  "500Text": "Vi ser över problemet. Försök senare."
+}

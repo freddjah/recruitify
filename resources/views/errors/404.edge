@@ -1,7 +1,8 @@
 @layout('layout')
 
 @section('content')
-  <div class="col-md-10 offset-md-1">
-    <h1>Not found</h1>
+  <div class="col-md-10 offset-md-1 text-center">
+    <h1>{{ antl.formatMessage('errorpage.404Header') }}</h1>
+    <p>{{ antl.formatMessage('errorpage.404Text') }}</p>
   </div>
 @endsection

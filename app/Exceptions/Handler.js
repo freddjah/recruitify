@@ -67,7 +67,7 @@ class ExceptionHandler extends BaseExceptionHandler {
       return response.redirect('back')
     }
 
-    return super.handle(...arguments) // eslint-disable-line prefer-rest-params
+    return response.status(500).send(view.render('errors.500'))
   }
 
   /**
