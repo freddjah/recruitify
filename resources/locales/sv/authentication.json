@@ -16,12 +16,14 @@
   "registerFormEmail": "Mejladress",
   "registerFormEmailPlaceholder": "Ange mejladress",
   "registerFormDateBirth": "Födelsedatum",
-  "registerFormDateBirthPlaceholder": "Ange födelsedatum",
+  "registerFormDateBirthPlaceholder": "Ange födelsedatum (YYYYMMDD-XXXX)",
   "registerFormUsername": "Användarnamn",
   "registerFormUsernamePlaceholder": "Ange användarnamn",
   "registerFormPassword": "Lösenord",
   "registerFormPasswordPlaceholder": "Ange lösenord",
   "registerFormConfirmPassword": "Upprepa lösenord",
   "registerFormConfirmPasswordPlaceholder": "Ange lösenord igen",
-  "registerFormRegisterAccount": "Registrera konto"
+  "registerFormRegisterAccount": "Registrera konto",
+  "errorUserNotFound": "Användaren finns inte",
+  "errorPasswordMismatch": "Lösenordet är fel"
 }

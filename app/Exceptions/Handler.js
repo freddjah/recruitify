@@ -33,7 +33,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    *
    * @return {void}
    */
-  async handle(error, { request, response, session, view }) {
+  async handle(error, { request, response, session, view, antl }) {
 
     if (error.name === 'InvalidSessionException') {
 
@@ -49,6 +49,22 @@ class ExceptionHandler extends BaseExceptionHandler {
 
     if (error.name === 'UnauthorizedException') {
       return response.status(401).send(view.render('errors.401'))
+    }
+
+    if (error.name === 'UserNotFoundException') {
+
+      session.withErrors([{ field: error.uidField, message: antl.formatMessage('authentication.errorUserNotFound') }]).flashAll()
+      await session.commit()
+
+      return response.redirect('back')
+    }
+
+    if (error.name === 'PasswordMisMatchException') {
+
+      session.withErrors([{ field: error.passwordField, message: antl.formatMessage('authentication.errorPasswordMismatch') }]).flashAll()
+      await session.commit()
+
+      return response.redirect('back')
     }
 
     return super.handle(...arguments) // eslint-disable-line prefer-rest-params

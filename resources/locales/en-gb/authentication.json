@@ -23,5 +23,7 @@
   "registerFormPasswordPlaceholder": "Enter password",
   "registerFormConfirmPassword": "Confirm password",
   "registerFormConfirmPasswordPlaceholder": "Enter password again",
-  "registerFormRegisterAccount": "Register account"
+  "registerFormRegisterAccount": "Register account",
+  "errorUserNotFound": "User does not exist",
+  "errorPasswordMismatch": "Invalid password"
 }
