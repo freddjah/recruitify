@@ -39,7 +39,7 @@ class Validator {
       const errors = await this.customValidation(ctx)
       if (errors.length > 0) {
 
-        const messages = this.messages()
+        const messages = this.messages(ctx)
         return withErrors(errors.map(({ field, validation }) => ({ field, validation, message: messages[`${field}.${validation}`] })))
       }
     }
