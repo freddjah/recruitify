@@ -44,6 +44,13 @@ class Person extends Model {
   }
 
   /**
+   * Hides fields
+   */
+  static get hidden() {
+    return ['password']
+  }
+
+  /**
    * Database model boot
   */
   static boot() {
