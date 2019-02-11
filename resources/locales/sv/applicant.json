@@ -1,0 +1,16 @@
+{
+  "header": "Ansökan",
+  "expertiseHeader": "Erfarenhet",
+  "competencenHeader": "Kompetens",
+  "addExpertiseHeader": "Lägg till nytt kunskapsområde",
+  "yearsOfExperienceHeader": "Erfarenhet (år)",
+  "addExpertiseButton": "Lägg till",
+  "availabilityHeader": "Tillgänglighet",
+  "addAvailabilityHeader": "Lägg till ny tillgänglighet",
+  "fromHeader": "Från",
+  "toHeader": "Till",
+  "addAvailabilityButton": "Lägg till",
+  "applyButton": "Ansök",
+  "cancelButton": "Avbryt",
+  "flashMessage": "Din ansökan är godkänd. Ring inte oss. Vi ringer dig"
+}
