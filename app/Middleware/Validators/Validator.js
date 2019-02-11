@@ -27,7 +27,7 @@ class Validator {
 
     if (typeof this.rules === 'function') {
 
-      const validation = await validateAll(request.all(), this.rules(), this.messages())
+      const validation = await validateAll(request.all(), this.rules(), this.messages(ctx))
 
       if (validation.fails()) {
         return withErrors(validation.messages())

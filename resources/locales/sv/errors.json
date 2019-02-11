@@ -1,0 +1,16 @@
+{
+  "required": "Detta fält är obligatoriskt",
+  "emailEmail": "Fyll i en korrekt epostadress",
+  "ssnRegex": "Fyll i ett korrekt personnummer",
+  "usernameRegex": "Använd a-z och 0-9 för ditt användarnamn",
+  "usernameUnique": "Det finns redan en användare registrerat med detta användarnamn",
+  "passwordConfirmed": "Lösenorden matchar inte",
+  "expertisesEmpty": "Fyll i minst en erfarenhet",
+  "expertisesLength": "Felaktig erfarenhet",
+  "expertisesYears": "Fyll i korrekt antal år",
+  "availabilitiesEmpty": "Fyll i minst en tillgänglighet",
+  "availabilitiesLength": "Felaktiga tillgängliheter",
+  "availabilitiesDates": "Från-datumet måste vara tidigare än till-datumet",
+  "applicationStatusIn": "Felaktig status",
+  "applicationStatusConflictingUpdates": "Någon har redan uppdaterat denna ansökan, försök igen"
+}

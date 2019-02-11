@@ -18,8 +18,8 @@ const globalMiddleware = [
   'Adonis/Middleware/Session',
   'Adonis/Middleware/Shield',
   'Adonis/Middleware/AuthInit',
-  'App/Middleware/ConvertEmptyStringsToNull',
   'App/Middleware/Locale',
+  'App/Middleware/ConvertEmptyStringsToNull',
 ]
 
 /*
@@ -45,6 +45,7 @@ const namedMiddleware = {
   role: 'App/Middleware/Role',
   createApplicationValidator: 'App/Middleware/Validators/CreateApplicationValidator',
   updateStatusValidator: 'App/Middleware/Validators/UpdateStatusValidator',
+  registerPersonValidator: 'App/Middleware/Validators/RegisterPersonValidator',
 }
 
 /*

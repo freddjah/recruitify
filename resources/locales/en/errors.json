@@ -1,0 +1,16 @@
+{
+  "required": "This field is required",
+  "emailEmail": "Enter a valid email",
+  "ssnRegex": "Enter a valid social security number",
+  "usernameRegex": "Use a-z and 0-9 for your username",
+  "usernameUnique": "There is already a user registered with that username",
+  "passwordConfirmed": "Passwords did not match",
+  "expertisesEmpty": "Enter at least one expertise",
+  "expertisesLength": "Invalid expertises",
+  "expertisesYears": "Enter valid years of experience",
+  "availabilitiesEmpty": "Enter at least one availability",
+  "availabilitiesLength": "Invalid availabilities",
+  "availabilitiesDates": "From date must be earlier than to date",
+  "applicationStatusIn": "Invalid status",
+  "applicationStatusConflictingUpdates": "Someone already updated this application, please try again"
+}

@@ -1,6 +1,7 @@
 'use strict'
 
 const { rule } = use('Validator')
+const Antl = use('Antl')
 
 /**
  * Validating registration input fields
@@ -36,11 +37,17 @@ class RegisterPerson {
   get messages() {
 
     return {
-      'email.email': 'Enter valid email',
-      'ssn.regex': 'Enter a correct social security number',
-      'username.regex': 'Use a-z and 0-9 for your username',
-      'username.unique': 'There is already a user registered with that username',
-      'password.confirmed': 'Passwords did not match',
+      'name.required': Antl.formatMessage('errors.required'),
+      'surname.required': Antl.formatMessage('errors.required'),
+      'email.required': Antl.formatMessage('errors.required'),
+      'email.email': Antl.formatMessage('errors.emailEmail'),
+      'ssn.required': Antl.formatMessage('errors.required'),
+      'ssn.regex': Antl.formatMessage('errors.ssnRegex'),
+      'username.required': Antl.formatMessage('errors.required'),
+      'username.regex': Antl.formatMessage('errors.usernameRegex'),
+      'username.unique': Antl.formatMessage('errors.usernameUnique'),
+      'password.required': Antl.formatMessage('errors.required'),
+      'password.confirmed': Antl.formatMessage('errors.passwordConfirmed'),
     }
   }
 

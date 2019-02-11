@@ -16,15 +16,15 @@ class CreateApplicationValidator extends Validator {
    * Custom error messages
    * @returns {Object}
    */
-  messages() {
+  messages({ antl }) {
 
     return {
-      'expertises.empty': 'Enter at least one expertise',
-      'expertises.length': 'Invalid expertises',
-      'expertises.years': 'Enter valid years of experience',
-      'availabilities.empty': 'Enter at least one availability',
-      'availabilities.length': 'Invalid availabilities',
-      'availabilities.dates': 'From date must be earlier than to date',
+      'expertises.empty': antl.formatMessage('errors.expertisesEmpty'),
+      'expertises.length': antl.formatMessage('errors.expertisesLength'),
+      'expertises.years': antl.formatMessage('errors.expertisesYears'),
+      'availabilities.empty': antl.formatMessage('errors.availabilitiesEmpty'),
+      'availabilities.length': antl.formatMessage('errors.availabilitiesLength'),
+      'availabilities.dates': antl.formatMessage('errors.availabilitiesDates'),
     }
   }
 

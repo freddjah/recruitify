@@ -5,7 +5,6 @@ const moment = require('moment')
 const Validator = use('App/Middleware/Validators/Validator')
 const PersonRepository = use('App/Repositories/PersonRepository')
 
-
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -30,11 +29,12 @@ class UpdateStatusValidator extends Validator {
    * Custom error messages
    * @returns {Object}
    */
-  messages() {
+  messages({ antl }) {
 
     return {
-      'applicationStatus.in': 'Invalid status',
-      'applicationStatus.conflictingUpdates': 'Someone already updated this application, please try again',
+      'applicationStatus.required': antl.formatMessage('errors.required'),
+      'applicationStatus.in': antl.formatMessage('errors.applicationStatusIn'),
+      'applicationStatus.conflictingUpdates': antl.formatMessage('errors.applicationStatusConflictingUpdates'),
     }
   }
 

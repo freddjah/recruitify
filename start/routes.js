@@ -25,7 +25,7 @@ Route.group(() => {
   Route.get('/login', 'Outside/AuthenticationController.loginForm')
   Route.post('/login', 'Outside/AuthenticationController.login')
   Route.get('/register', 'Outside/AuthenticationController.registerForm')
-  Route.post('/register', 'Outside/AuthenticationController.register').validator('RegisterPerson')
+  Route.post('/register', 'Outside/AuthenticationController.register').middleware('registerPersonValidator')
   Route.get('/register/done', 'Outside/AuthenticationController.registerDone')
 }).middleware('guest')
 
