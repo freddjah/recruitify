@@ -43,3 +43,17 @@ Route.group(() => {
   Route.get('applications/:personId', 'Inside/Recruiter/ApplicationController.view')
   Route.post('applications/:personId', 'Inside/Recruiter/ApplicationController.updateStatus').middleware('updateStatusValidator')
 }).prefix('/recruiter').middleware(['auth', 'role:recruiter'])
+
+Route.group(() => {
+  Route.get('competences', 'ApiController.getCompetences')
+  Route.get('statuses', 'ApiController.getStatuses')
+  Route.post('login', 'ApiController.login')
+  Route.post('register', 'ApiController.register').middleware('registerPersonValidator')
+}).prefix('/api')
+
+Route.group(() => {
+  Route.post('applicant/application', 'ApiController.saveApplication').middleware(['role:applicant', 'createApplicationValidator'])
+  Route.get('recruiter/applications', 'ApiController.searchResults').middleware('role:recruiter')
+  Route.get('recruiter/applications/:personId', 'ApiController.view').middleware('role:recruiter')
+  Route.post('recruiter/applications/:personId', 'ApiController.updateStatus').middleware(['role:recruiter', 'updateStatusValidator'])
+}).middleware('auth:jwt').prefix('/api')

@@ -8,6 +8,7 @@
   "registerDoneSuccess": "Success",
   "registerDoneMessage": "Your account was created. Go to",
   "registerDoneLoginLink": "login",
+  "registerDoneApi": "The account was created.",
   "registerFormTitle": "Registration",
   "registerFormFirstName": "First name",
   "registerFormFirstNamePlaceholder": "Enter first name",

@@ -42,6 +42,7 @@ class CreateApplicationValidator extends Validator {
     const form = request.post()
     const errors = []
 
+
     if (!form.expertiseCompetenceId || !form.expertiseYearsOfExperience) {
       errors.push(this.customError('expertises', 'empty'))
     }
@@ -52,6 +53,14 @@ class CreateApplicationValidator extends Validator {
 
     if (errors.length > 0) {
       return errors
+    }
+
+    if (form.expertiseCompetenceId.length === 0 || form.expertiseYearsOfExperience.length === 0) {
+      errors.push(this.customError('expertises', 'empty'))
+    }
+
+    if (form.availabilityFrom.length === 0 || form.availabilityTo.length === 0) {
+      errors.push(this.customError('availabilities', 'empty'))
     }
 
     if (form.expertiseCompetenceId.length !== form.expertiseYearsOfExperience.length) {
@@ -85,6 +94,8 @@ class CreateApplicationValidator extends Validator {
     if (invalidAvailability) {
       errors.push(this.customError('availabilities', 'dates'))
     }
+
+    console.log('hej', errors)
 
     return errors
   }

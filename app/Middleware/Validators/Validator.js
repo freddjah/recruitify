@@ -19,8 +19,15 @@ class Validator {
   async handle(ctx, next) { // eslint-disable-line
 
     const { request, response, session } = ctx
+    const isJSON = request.accepts(['html', 'json']) === 'json'
 
     const withErrors = messages => {
+
+      if (isJSON) {
+        const errors = messages.reduce((acc, { message, field }) => ({ ...acc, [field]: message }), {})
+        return response.send({ errors })
+      }
+
       session.withErrors(messages).flashAll()
       return response.redirect('back')
     }
