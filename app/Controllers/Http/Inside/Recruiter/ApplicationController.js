@@ -4,6 +4,7 @@ const moment = require('moment')
 
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
+const Logger = use('Logger')
 
 /**
  * Controller for handling applications for recruiter
@@ -25,7 +26,9 @@ class ApplicationController {
    * @param {Object} ctx.view - Adonis view
    */
   async searchForm({ view }) {
+    Logger.debug('Fetching competences...')
     const competences = await CompetenceRepository.getAll()
+    Logger.info(`${competences.rows.length} competences was fetched`)
     return view.render('inside.recruiter.application.search-form', { competences })
   }
 
@@ -38,9 +41,12 @@ class ApplicationController {
   async searchResults({ view, request }) {
 
     const params = request.get()
+    Logger.debug('Searching for applications...', params)
     const searchQuery = PersonRepository.buildPersonsBySearchQuery({ ...params, roleId: 2 })
     const currentPage = params.page
     const persons = await searchQuery.paginate(currentPage, 10)
+    Logger.info(`Search query resulted in ${persons.rows.length} persons`)
+
     const query = request.get()
 
     return view.render('inside.recruiter.application.search-results', { persons, query })
@@ -55,9 +61,11 @@ class ApplicationController {
    */
   async view({ view, params, request }) {
 
+    Logger.debug('Fetching person and relations...', { personId: params.person_id })
     const person = await PersonRepository.findById(params.personId)
     const availabilities = await person.availabilities().fetch()
     const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
+    Logger.info(`Found person with ${availabilities.rows.length} availabilities and ${competenceProfiles.rows.length} competence profiles`)
     const query = request.get()
     const reviewTime = moment().format('YYYY-MM-DD HH:mm:ss')
 
@@ -76,12 +84,16 @@ class ApplicationController {
   async updateStatus({ request, response, params, session, antl }) {
 
     const form = request.post()
+    Logger.debug('Fetching user...', { personId: params.person_id })
     const person = await PersonRepository.findById(params.personId)
+    Logger.info('Found user')
 
+    Logger.debug('Updating status...', { personId: params.person_id })
     await PersonRepository.update(person, {
       application_status: form.applicationStatus,
       application_reviewed_at: moment().format('YYYY-MM-DD HH:mm:ss'),
     })
+    Logger.info('Successfully updated status', { personId: params.person_id })
 
     session.flash({ success: antl.formatMessage('recruiter.updateFlashMessage') })
 

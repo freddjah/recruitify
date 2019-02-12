@@ -2,6 +2,7 @@
 
 const Validator = use('App/Middleware/Validators/Validator')
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
+const Logger = use('Logger')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -71,7 +72,10 @@ class CreateApplicationValidator extends Validator {
       errors.push(this.customError('availabilities', 'length'))
     }
 
+    Logger.debug('Fetching competences with ids... ', { competenceIds: form.expertiseCompetenceId })
     const competences = await CompetenceRepository.getCompetenceIds(form.expertiseCompetenceId)
+    Logger.info(`Successfully fetched ${competences.rows.length} competences`)
+
     if (competences.rows.length !== form.expertiseCompetenceId.length) {
       errors.push(this.customError('expertises', 'length'))
     }
@@ -94,8 +98,6 @@ class CreateApplicationValidator extends Validator {
     if (invalidAvailability) {
       errors.push(this.customError('availabilities', 'dates'))
     }
-
-    console.log('hej', errors)
 
     return errors
   }

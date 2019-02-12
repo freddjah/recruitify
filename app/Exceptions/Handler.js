@@ -1,6 +1,7 @@
 'use strict'
 
 const BaseExceptionHandler = use('BaseExceptionHandler')
+const Logger = use('Logger')
 
 function is404Error(error) {
 
@@ -36,6 +37,7 @@ class ExceptionHandler extends BaseExceptionHandler {
   async handle(error, { request, response, session, view, antl }) {
 
     const isJSON = request.accepts(['html', 'json']) === 'json'
+    Logger.error(error.stack)
 
     if (error.name === 'UserNotFoundException') {
 

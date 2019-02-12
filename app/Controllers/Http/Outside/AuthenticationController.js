@@ -1,6 +1,7 @@
 'use strict'
 
 const PersonRepository = use('App/Repositories/PersonRepository')
+const Logger = use('Logger')
 
 /**
  * Controller to handle persons and authentication
@@ -24,7 +25,10 @@ class AuthenticationController {
    */
   async register({ request, response }) {
 
+    Logger.debug('Creating new user...')
     await PersonRepository.create({ ...request.all(), roleId: 2 })
+    Logger.info('Successfully created user')
+
     return response.redirect('/register/done')
   }
 
@@ -59,7 +63,9 @@ class AuthenticationController {
   async login({ auth, request, response, session }) {
 
     const { username, password } = request.all()
+    Logger.debug('Validating login...', { username })
     await auth.attempt(username, password)
+    Logger.info('Successfully logged in user')
 
     const redirectUrl = session.pull('from_url', '/')
     return response.redirect(redirectUrl)
@@ -74,7 +80,9 @@ class AuthenticationController {
    */
   async logout({ response, auth }) {
 
+    Logger.debug('Trying to logout user...')
     await auth.logout()
+    Logger.info('Successfully logged out user')
     return response.redirect('/')
   }
 }

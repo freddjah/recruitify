@@ -4,6 +4,7 @@ const moment = require('moment')
 
 const Validator = use('App/Middleware/Validators/Validator')
 const PersonRepository = use('App/Repositories/PersonRepository')
+const Logger = use('Logger')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -50,7 +51,11 @@ class UpdateStatusValidator extends Validator {
   async customValidation({ request, params: { personId } }) {
 
     const form = request.post()
+
+    Logger.debug('Fetching person with id...', { personId })
     const person = await PersonRepository.findById(personId)
+    Logger.info('Successfully fetched person')
+
     const errors = []
 
     if (person.application_reviewed_at !== null) {

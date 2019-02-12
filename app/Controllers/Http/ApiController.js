@@ -6,6 +6,7 @@ const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
 const createTransformers = use('App/transformers')
 const saveApplication = use('App/Jobs/saveApplication')
+const Logger = use('Logger')
 
 /**
  * Controller to handle API
@@ -22,7 +23,9 @@ class ApiController {
   async getCompetences({ response, antl }) {
 
     const { transformCompetence } = createTransformers(antl.currentLocale())
+    Logger.debug('Fetching competences...')
     const competences = await CompetenceRepository.getAll()
+    Logger.info(`${competences.rows.length} competences was fetched`)
 
     response.send({
       competences: competences.rows.map(transformCompetence),
@@ -58,9 +61,11 @@ class ApiController {
     const { username, password } = request.post()
 
     const authJwt = auth.authenticator('jwt')
+    Logger.debug('Validating login...', { username })
     const person = await authJwt.validate(username, password, true)
     const role = await person.role().fetch()
     const jwt = await authJwt.generate(person, { role: role.name })
+    Logger.info('User successfully created token')
 
     return response.send(jwt)
   }
@@ -74,7 +79,9 @@ class ApiController {
    */
   async register({ request, response, antl }) {
 
+    Logger.debug('Creating new user...')
     await PersonRepository.create({ ...request.post(), roleId: 2 })
+    Logger.info('Successfully created user')
 
     response.send({ message: antl.formatMessage('authentication.registerDoneApi') })
   }
@@ -92,7 +99,9 @@ class ApiController {
   async saveApplication({ request, response, auth, antl }) {
 
     const person = await auth.getUser()
+    Logger.debug('Saving application...')
     await saveApplication(person, request.post())
+    Logger.info('Application was successfully created', { personId: person.person_id })
 
     return response.send({ message: antl.formatMessage('applicant.flashMessage') })
   }
@@ -110,9 +119,11 @@ class ApiController {
     const { transformPerson } = createTransformers(antl.currentLocale())
 
     const params = request.get()
+    Logger.debug('Searching for applications...', params)
     const searchQuery = PersonRepository.buildPersonsBySearchQuery({ ...params, roleId: 2 })
     const currentPage = params.page
     const persons = await searchQuery.paginate(currentPage, 10)
+    Logger.info(`Search query resulted in ${persons.rows.length} persons`)
 
     return response.send({
       persons: persons.rows.map(transformPerson),
@@ -132,9 +143,11 @@ class ApiController {
 
     const { transformAvailability, transformCompetenceProfile, transformPerson } = createTransformers(antl.currentLocale())
 
+    Logger.debug('Fetching person and relations...', { personId: params.person_id })
     const person = await PersonRepository.findById(params.personId)
     const availabilities = await person.availabilities().fetch()
     const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
+    Logger.info(`Found person with ${availabilities.rows.length} availabilities and ${competenceProfiles.rows.length} competence profiles`)
 
     return response.send({
       person: transformPerson(person),
@@ -151,17 +164,21 @@ class ApiController {
    * @param {Object} ctx.params - Adonis params
    * @returns {JSON} - Application
    */
-  async updateStatus({ request, response, params }) {
+  async updateStatus({ request, response, params, antl }) {
 
     const form = request.post()
+    Logger.debug('Fetching user...', { personId: params.person_id })
     const person = await PersonRepository.findById(params.personId)
+    Logger.info('Found user')
 
+    Logger.debug('Updating status...', { personId: params.person_id })
     await PersonRepository.update(person, {
       application_status: form.applicationStatus,
       application_reviewed_at: moment().format('YYYY-MM-DD HH:mm:ss'),
     })
+    Logger.info('Successfully updated status', { personId: params.person_id })
 
-    return response.send({ message: 'Success' })
+    return response.send({ message: antl.formatMessage('recruiter.updateFlashMessage') })
   }
 }
 

@@ -2,6 +2,7 @@
 
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const saveApplication = use('App/Jobs/saveApplication')
+const Logger = use('Logger')
 
 /**
  * Controller for handling applications for applicant
@@ -23,7 +24,9 @@ class ApplicationController {
    * @param {Object} ctx.view - Adonis view
    */
   async applicationForm({ view }) {
+    Logger.debug('Fetching competences...')
     const competences = await CompetenceRepository.getAll()
+    Logger.info(`${competences.rows.length} competences was fetched`)
     return view.render('inside.applicant.application.application-form', { competences })
   }
 
@@ -40,7 +43,9 @@ class ApplicationController {
     const { request, response, session, auth, antl } = ctx
 
     const person = await auth.getUser()
+    Logger.debug('Saving application...')
     await saveApplication(person, request.post())
+    Logger.info('Application was successfully created', { personId: person.person_id })
 
     session.flash({ confirmation: antl.formatMessage('applicant.flashMessage') })
     return response.redirect('back')

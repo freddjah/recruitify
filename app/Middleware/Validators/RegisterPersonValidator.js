@@ -1,10 +1,7 @@
 'use strict'
 
-const moment = require('moment')
-
 const { rule } = use('Validator')
 const Validator = use('App/Middleware/Validators/Validator')
-const PersonRepository = use('App/Repositories/PersonRepository')
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
