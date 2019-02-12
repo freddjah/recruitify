@@ -101,9 +101,9 @@ class PersonRepository {
     return Person.findOrFail(id)
   }
 
-  static async update(person, data) {
+  static async update(person, data, trx) {
     person.merge(data)
-    await person.save()
+    await person.save(trx)
     return person
   }
 }

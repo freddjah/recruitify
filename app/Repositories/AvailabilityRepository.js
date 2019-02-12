@@ -14,7 +14,7 @@ class AvailabilityRepository {
    * @param {string} availabilityData.toDate
    * @returns {Promise<availabilityModel>} - A promise that can be awaited which resolves to a Availability object.
    */
-  static create({ personId, fromDate, toDate }) {
+  static create({ personId, fromDate, toDate }, trx) {
 
     const Availability = use('App/Models/Availability')
 
@@ -22,7 +22,7 @@ class AvailabilityRepository {
       person_id: personId,
       from_date: fromDate,
       to_date: toDate,
-    })
+    }, trx)
   }
 
   /**
@@ -30,10 +30,10 @@ class AvailabilityRepository {
    * @param {number} personId
    * @returns {Promise<void>} - A promise that can be awaited.
    */
-  static deleteByPersonId(personId) {
+  static deleteByPersonId(personId, trx) {
 
     const Availability = use('App/Models/Availability')
-    return Availability.query().where('person_id', personId).delete()
+    return Availability.query().transacting(trx).where('person_id', personId).delete()
   }
 }
 

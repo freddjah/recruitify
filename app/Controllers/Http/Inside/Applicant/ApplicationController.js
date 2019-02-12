@@ -1,11 +1,7 @@
 'use strict'
 
-const moment = require('moment')
-
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
-const AvailabilityRepository = use('App/Repositories/AvailabilityRepository')
-const CompetenceProfileRepository = use('App/Repositories/CompetenceProfileRepository')
-const PersonRepository = use('App/Repositories/PersonRepository')
+const saveApplication = use('App/Jobs/saveApplication')
 
 /**
  * Controller for handling applications for applicant
@@ -39,38 +35,13 @@ class ApplicationController {
    * @param {Object} ctx.session - Adonis session
    * @param {Object} ctx.auth - Adonis auth
    */
-  async saveApplication({ request, response, session, auth, antl }) {
+  async saveApplication(ctx) {
+
+    const { request, response, session, auth, antl } = ctx
 
     const person = await auth.getUser()
+    await saveApplication(person, request.post())
 
-    await PersonRepository.update(person, {
-      application_date: moment().format('YYYY-MM-DD'),
-      application_status: 'unhandled',
-      application_reviewed_at: null,
-    })
-
-    await AvailabilityRepository.deleteByPersonId(person.person_id)
-    await CompetenceProfileRepository.deleteByPersonId(person.person_id)
-
-    const form = request.post()
-
-    for (const index in form.expertiseCompetenceId) {
-
-      await CompetenceProfileRepository.create({
-        personId: person.person_id,
-        competenceId: form.expertiseCompetenceId[index],
-        yearsOfExperience: form.expertiseYearsOfExperience[index],
-      })
-    }
-
-    for (const index in form.availabilityFrom) {
-
-      await AvailabilityRepository.create({
-        personId: person.person_id,
-        fromDate: form.availabilityFrom[index],
-        toDate: form.availabilityTo[index],
-      })
-    }
     session.flash({ confirmation: antl.formatMessage('applicant.flashMessage') })
     return response.redirect('back')
   }

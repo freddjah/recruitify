@@ -14,7 +14,7 @@ class CompetenceProfileRepository {
    * @param {string} competenceData.yearsOfExperience
    * @returns {Promise<CompetenceProfileModel>} - A promise that can be awaited which resolves to a CompetenceProfile object.
    */
-  static create({ personId, competenceId, yearsOfExperience }) {
+  static create({ personId, competenceId, yearsOfExperience }, trx) {
 
     const CompetenceProfile = use('App/Models/CompetenceProfile')
 
@@ -22,7 +22,7 @@ class CompetenceProfileRepository {
       person_id: personId,
       competence_id: competenceId,
       years_of_experience: yearsOfExperience,
-    })
+    }, trx)
   }
 
   /**
@@ -30,10 +30,10 @@ class CompetenceProfileRepository {
    * @param {number} personId
    * @returns {Promise<void>} - A promise that can be awaited.
    */
-  static deleteByPersonId(personId) {
+  static deleteByPersonId(personId, trx) {
 
     const CompetenceProfile = use('App/Models/CompetenceProfile')
-    return CompetenceProfile.query().where('person_id', personId).delete()
+    return CompetenceProfile.query().transacting(trx).where('person_id', personId).delete()
   }
 }
 

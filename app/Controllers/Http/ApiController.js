@@ -4,10 +4,8 @@ const moment = require('moment')
 
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
-const AvailabilityRepository = use('App/Repositories/AvailabilityRepository')
-const CompetenceProfileRepository = use('App/Repositories/CompetenceProfileRepository')
 const createTransformers = use('App/transformers')
-
+const saveApplication = use('App/Jobs/saveApplication')
 
 /**
  * Controller to handle API
@@ -94,35 +92,7 @@ class ApiController {
   async saveApplication({ request, response, auth, antl }) {
 
     const person = await auth.getUser()
-
-    await PersonRepository.update(person, {
-      application_date: moment().format('YYYY-MM-DD'),
-      application_status: 'unhandled',
-      application_reviewed_at: null,
-    })
-
-    await AvailabilityRepository.deleteByPersonId(person.person_id)
-    await CompetenceProfileRepository.deleteByPersonId(person.person_id)
-
-    const form = request.post()
-
-    for (const index in form.expertiseCompetenceId) {
-
-      await CompetenceProfileRepository.create({
-        personId: person.person_id,
-        competenceId: form.expertiseCompetenceId[index],
-        yearsOfExperience: form.expertiseYearsOfExperience[index],
-      })
-    }
-
-    for (const index in form.availabilityFrom) {
-
-      await AvailabilityRepository.create({
-        personId: person.person_id,
-        fromDate: form.availabilityFrom[index],
-        toDate: form.availabilityTo[index],
-      })
-    }
+    await saveApplication(person, request.post())
 
     return response.send({ message: antl.formatMessage('applicant.flashMessage') })
   }
