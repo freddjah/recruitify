@@ -40,7 +40,7 @@ class ExceptionHandler extends BaseExceptionHandler {
     if (error.name === 'UserNotFoundException') {
 
       if (isJSON) {
-        return response.status(401).send({ error: 'User was not found' })
+        return response.status(401).send({ error: antl.formatMessage('authentication.errorUserNotFound') })
       }
 
       session.withErrors([{ field: error.uidField, message: antl.formatMessage('authentication.errorUserNotFound') }]).flashAll()
@@ -52,7 +52,7 @@ class ExceptionHandler extends BaseExceptionHandler {
     if (error.name === 'PasswordMisMatchException') {
 
       if (isJSON) {
-        return response.status(401).send({ error: 'Invalid password' })
+        return response.status(401).send({ error: antl.formatMessage('authentication.errorPasswordMismatch') })
       }
 
       session.withErrors([{ field: error.passwordField, message: antl.formatMessage('authentication.errorPasswordMismatch') }]).flashAll()
@@ -72,7 +72,7 @@ class ExceptionHandler extends BaseExceptionHandler {
     if (is404Error(error)) {
 
       if (isJSON) {
-        return response.status(404).send({ error: 'Page not found' })
+        return response.status(404).send({ error: antl.formatMessage('errorpage.404Text') })
       }
 
       return response.status(404).send(view.render('errors.404'))
@@ -81,13 +81,20 @@ class ExceptionHandler extends BaseExceptionHandler {
     if (error.name === 'UnauthorizedException') {
 
       if (isJSON) {
-        return response.status(401).send({ error: 'You are not allowed to visit this page' })
+        return response.status(401).send({ error: antl.formatMessage('errorpage.401Text') })
       }
 
       return response.status(401).send(view.render('errors.401'))
     }
 
-    // return response.status(500).send(view.render('errors.500'))
+    if (process.env.NODE_ENV === 'production') {
+      if (isJSON) {
+        return response.status(500).send({ error: antl.formatMessage('errorpage.500Text') })
+      }
+
+      return response.status(500).send(view.render('errors.500'))
+    }
+
     return super.handle(...arguments) // eslint-disable-line prefer-rest-params
   }
 

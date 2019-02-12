@@ -64,6 +64,15 @@ class ApplicationController {
     return view.render('inside.recruiter.application.view', { person, availabilities, competenceProfiles, query, reviewTime })
   }
 
+  /**
+   * Updates status of application
+   * @param {Object} ctx
+   * @param {Object} ctx.request - Adonis request
+   * @param {Object} ctx.response - Adonis response
+   * @param {Object} ctx.params - Adonis params
+   * @param {Object} ctx.session - Adonis session
+   * @param {Object} ctx.antl - Adonis antl
+   */
   async updateStatus({ request, response, params, session, antl }) {
 
     const form = request.post()

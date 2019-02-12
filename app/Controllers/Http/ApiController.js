@@ -6,23 +6,37 @@ const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
 const AvailabilityRepository = use('App/Repositories/AvailabilityRepository')
 const CompetenceProfileRepository = use('App/Repositories/CompetenceProfileRepository')
+const createTransformers = use('App/transformers')
+
 
 /**
- * Controller to handle home page
+ * Controller to handle API
  */
 class ApiController {
 
   /**
-   * Renders register form
+   * Fetches competences.
    * @param {Object} ctx
-   * @param {Object} ctx.view - Adonis view
+   * @param {Object} ctx.response - Adonis response
+   * @param {Object} ctx.antl - Adonis antl
+   * @returns {JSON} - Competences
    */
-  async getCompetences({ response }) {
+  async getCompetences({ response, antl }) {
+
+    const { transformCompetence } = createTransformers(antl.currentLocale())
     const competences = await CompetenceRepository.getAll()
 
-    response.send({ competences })
+    response.send({
+      competences: competences.rows.map(transformCompetence),
+    })
   }
 
+  /**
+   * Fetches competences.
+   * @param {Object} ctx
+   * @param {Object} ctx.response - Adonis response
+   * @returns {JSON} - Statuses
+   */
   async getStatuses({ response }) {
     response.send({
       statuses: {
@@ -33,7 +47,16 @@ class ApiController {
     })
   }
 
+  /**
+   * Handles login request
+   * @param {Object} ctx
+   * @param {Object} ctx.auth - Adonis auth
+   * @param {Object} ctx.request - Adonis request
+   * @param {Object} ctx.response - Adonis response
+   * @returns {JSON} - JWT token
+   */
   async login({ request, response, auth }) {
+
     const { username, password } = request.post()
 
     const authJwt = auth.authenticator('jwt')
@@ -44,12 +67,32 @@ class ApiController {
     return response.send(jwt)
   }
 
-  async register({ request, response }) {
-    const person = await PersonRepository.create({ ...request.post(), roleId: 2 })
-    response.send({ person })
+  /**
+   * Handle register request, registers a new person
+   * @param {Object} ctx
+   * @param {Object} ctx.request - Adonis request
+   * @param {Object} ctx.response - Adonis response
+   * @returns {JSON} - Message
+   */
+  async register({ request, response, antl }) {
+
+    await PersonRepository.create({ ...request.post(), roleId: 2 })
+
+    response.send({ message: antl.formatMessage('authentication.registerDoneApi') })
   }
 
-  async saveApplication({ request, response, auth }) {
+  /**
+   * Handle application form request. Creates new application
+   * @param {Object} ctx
+   * @param {Object} ctx.request - Adonis request
+   * @param {Object} ctx.response - Adonis response
+   * @param {Object} ctx.session - Adonis session
+   * @param {Object} ctx.auth - Adonis auth
+   * @param {Object} ctx.antl - Adonis antl
+   * @returns {JSON} - Message
+   */
+  async saveApplication({ request, response, auth, antl }) {
+
     const person = await auth.getUser()
 
     await PersonRepository.update(person, {
@@ -81,41 +124,62 @@ class ApiController {
       })
     }
 
-    return response.send({ message: 'Great success!' })
+    return response.send({ message: antl.formatMessage('applicant.flashMessage') })
   }
 
-  async searchResults({ request, response }) {
+  /**
+   * Displays search result
+   * @param {Object} ctx
+   * @param {Object} ctx.view - Adonis antl
+   * @param {Object} ctx.request - Adonis request
+   * @param {Object} ctx.request - Adonis response
+   * @returns {JSON} - Search result
+   */
+  async searchResults({ antl, request, response }) {
+
+    const { transformPerson } = createTransformers(antl.currentLocale())
+
     const params = request.get()
     const searchQuery = PersonRepository.buildPersonsBySearchQuery({ ...params, roleId: 2 })
     const currentPage = params.page
     const persons = await searchQuery.paginate(currentPage, 10)
 
-    return response.send({ persons })
+    return response.send({
+      persons: persons.rows.map(transformPerson),
+      paginator: persons.pages,
+    })
   }
 
   /**
    * Display specific application
    * @param {Object} ctx
-   * @param {Object} ctx.view - Adonis view
-   * @param {Object} ctx.request - Adonis request
-   * @param {Object} params
+   * @param {Object} ctx.params - Adonis params
+   * @param {Object} ctx.response - Adonis response
+   * @param {Object} ctx.antl - Adonis antl
+   * @returns {JSON} - Application
    */
-  async view({ params, response }) {
+  async view({ params, response, antl }) {
+
+    const { transformAvailability, transformCompetenceProfile, transformPerson } = createTransformers(antl.currentLocale())
 
     const person = await PersonRepository.findById(params.personId)
-    const availabilities = await person.availabilities().setHidden(['availability_id', 'person_id']).fetch()
+    const availabilities = await person.availabilities().fetch()
     const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
-    const reviewTime = moment().format('YYYY-MM-DD HH:mm:ss')
 
-    return response.send({ person, availabilities, competenceProfiles, reviewTime })
+    return response.send({
+      person: transformPerson(person),
+      availabilities: availabilities.rows.map(transformAvailability),
+      competenceProfiles: competenceProfiles.rows.map(transformCompetenceProfile),
+    })
   }
 
   /**
-   * Display specific application
+   * Update application status
    * @param {Object} ctx
-   * @param {Object} ctx.view - Adonis view
    * @param {Object} ctx.request - Adonis request
-   * @param {Object} params
+   * @param {Object} ctx.response - Adonis response
+   * @param {Object} ctx.params - Adonis params
+   * @returns {JSON} - Application
    */
   async updateStatus({ request, response, params }) {
 

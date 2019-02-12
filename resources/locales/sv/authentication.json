@@ -8,6 +8,7 @@
   "registerDoneSuccess": "Yippie!",
   "registerDoneMessage": "Ditt konto har lyckats registreras. Klicka för att",
   "registerDoneLoginLink": "logga in",
+  "registerDoneApi": "Kontot har registrerats.",
   "registerFormTitle": "Registrering",
   "registerFormFirstName": "Förnamn",
   "registerFormFirstNamePlaceholder": "Ange förnamn",
