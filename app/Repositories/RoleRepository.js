@@ -1,7 +1,7 @@
 'use strict'
 
 /**
- * Repository for Availability
+ * Repository for Role
  * Handles functions for database requests
  */
 class RoleRepository {
