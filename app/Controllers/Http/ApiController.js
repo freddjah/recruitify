@@ -4,6 +4,7 @@ const moment = require('moment')
 
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
+const RoleRepository = use('App/Repositories/RoleRepository')
 const createTransformers = use('App/transformers')
 const saveApplication = use('App/Jobs/saveApplication')
 const Logger = use('Logger')
@@ -78,9 +79,14 @@ class ApiController {
    * @returns {JSON} - Message
    */
   async register({ request, response, antl }) {
+    const { APPLICANT } = RoleRepository.getRoleNames()
+
+    Logger.debug('Fetching role...', { role_name: APPLICANT })
+    const role = await RoleRepository.getByName(APPLICANT)
+    Logger.info('Successfully fetched role')
 
     Logger.debug('Creating new user...')
-    await PersonRepository.create({ ...request.post(), roleId: 2 })
+    await PersonRepository.create({ ...request.post(), roleId: role.role_id })
     Logger.info('Successfully created user')
 
     response.send({ message: antl.formatMessage('authentication.registerDoneApi') })
@@ -117,10 +123,15 @@ class ApiController {
   async searchResults({ antl, request, response }) {
 
     const { transformPerson } = createTransformers(antl.currentLocale())
+    const { APPLICANT } = RoleRepository.getRoleNames()
+
+    Logger.debug('Fetching role...', { role_name: APPLICANT })
+    const role = await RoleRepository.getByName(APPLICANT)
+    Logger.info('Successfully fetched role')
 
     const params = request.get()
     Logger.debug('Searching for applications...', params)
-    const searchQuery = PersonRepository.buildPersonsBySearchQuery({ ...params, roleId: 2 })
+    const searchQuery = PersonRepository.buildPersonsBySearchQuery({ ...params, roleId: role.role_id })
     const currentPage = params.page
     const persons = await searchQuery.paginate(currentPage, 10)
     Logger.info(`Search query resulted in ${persons.rows.length} persons`)

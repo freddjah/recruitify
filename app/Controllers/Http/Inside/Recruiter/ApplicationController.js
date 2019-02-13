@@ -4,6 +4,7 @@ const moment = require('moment')
 
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
+const RoleRepository = use('App/Repositories/RoleRepository')
 const Logger = use('Logger')
 
 /**
@@ -40,9 +41,15 @@ class ApplicationController {
    */
   async searchResults({ view, request }) {
 
+    const { APPLICANT } = RoleRepository.getRoleNames()
+
+    Logger.debug('Fetching role...', { role_name: APPLICANT })
+    const role = await RoleRepository.getByName(APPLICANT)
+    Logger.info('Successfully fetched role')
+
     const params = request.get()
     Logger.debug('Searching for applications...', params)
-    const searchQuery = PersonRepository.buildPersonsBySearchQuery({ ...params, roleId: 2 })
+    const searchQuery = PersonRepository.buildPersonsBySearchQuery({ ...params, roleId: role.role_id })
     const currentPage = params.page
     const persons = await searchQuery.paginate(currentPage, 10)
     Logger.info(`Search query resulted in ${persons.rows.length} persons`)

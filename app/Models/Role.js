@@ -13,6 +13,14 @@ class Role extends Model {
     return 'role_id'
   }
 
+  static get APPLICANT_ROLE_NAME() {
+    return 'applicant'
+  }
+
+  static get RECRUITER_ROLE_NAME() {
+    return 'recruiter'
+  }
+
   /**
    * Database created at column
    * @returns {null}

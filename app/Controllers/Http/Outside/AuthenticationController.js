@@ -1,6 +1,7 @@
 'use strict'
 
 const PersonRepository = use('App/Repositories/PersonRepository')
+const RoleRepository = use('App/Repositories/RoleRepository')
 const Logger = use('Logger')
 
 /**
@@ -24,9 +25,14 @@ class AuthenticationController {
    * @param {Object} ctx.response - Adonis response
    */
   async register({ request, response }) {
+    const { APPLICANT } = RoleRepository.getRoleNames()
+
+    Logger.debug('Fetching role...', { role_name: APPLICANT })
+    const applicantRole = await RoleRepository.getByName(APPLICANT)
+    Logger.info('Successfully fetched role')
 
     Logger.debug('Creating new user...')
-    await PersonRepository.create({ ...request.all(), roleId: 2 })
+    await PersonRepository.create({ ...request.all(), roleId: applicantRole.role_id })
     Logger.info('Successfully created user')
 
     return response.redirect('/register/done')
