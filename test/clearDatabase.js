@@ -11,12 +11,14 @@ const excludeTables = [
 async function clearDatabase() {
 
   const tables = await Database.raw("SELECT * FROM sqlite_master WHERE type='table'")
+
   const truncateTables = tables
     .map(({ tbl_name: table }) => table)
     .filter(table => !excludeTables.includes(table))
-    .map(Database.truncate)
 
-  await Promise.all(truncateTables)
+  for (const table of truncateTables) {
+    await Database.truncate(table)
+  }
 }
 
 module.exports = clearDatabase

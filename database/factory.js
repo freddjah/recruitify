@@ -23,6 +23,7 @@ function dateTime(timestamp) {
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
+const Hash = use('Hash')
 
 Factory.blueprint('App/Models/Availability', (faker, _, data) => ({
   person_id: data.person_id,
@@ -42,7 +43,7 @@ Factory.blueprint('App/Models/CompetenceProfile', (faker, _, data) => ({
   years_of_experience: faker.year(),
 }))
 
-Factory.blueprint('App/Models/Person', (faker, _, { password = '12345', role = 'applicant' } = {}) => {
+Factory.blueprint('App/Models/Person', async (faker, _, { password = '12345', role = 'applicant' } = {}) => {
 
   const roleId = role === 'recruiter' ? 1 : 2
 
@@ -51,7 +52,7 @@ Factory.blueprint('App/Models/Person', (faker, _, { password = '12345', role = '
     surname: faker.last(),
     ssn: `${date(faker.timestamp(), 'YYYYMMDD')}-${faker.integer({ min: 1000, max: 9999 })}`,
     email: faker.email(),
-    password,
+    password: await Hash.make(password),
     role_id: roleId,
     username: faker.username(),
     application_date: date(faker.timestamp()),
