@@ -15,14 +15,15 @@ beforeEach(async () => {
 
   await clearDatabase()
   response.send.resetHistory()
+  response.redirect.resetHistory()
 })
 
-test('register form: Renders register form', async () => {
-  controller.registerForm({ view })
+test('registerForm: Renders register form', async () => {
+  await controller.registerForm({ view })
   sinon.assert.calledWith(view.render, 'outside.authentication.register-form')
 })
 
-test('register: Respond with redirect login', async ({ assert }) => {
+test('register: Checking if newly created person exists', async ({ assert }) => {
 
   const request = { all: () => ({ name: 'name', surname: 'surname' }) }
 
@@ -32,13 +33,13 @@ test('register: Respond with redirect login', async ({ assert }) => {
   assert.equal(person.surname, 'surname')
 })
 
-test('register done: Renders register done page', async () => {
-  controller.registerDone({ view })
+test('registerDone: Renders register done page', async () => {
+  await controller.registerDone({ view })
   sinon.assert.calledWith(view.render, 'outside.authentication.register-done')
 })
 
-test('login form: Renders login form', async () => {
-  controller.loginForm({ view })
+test('loginForm: Renders login form', async () => {
+  await controller.loginForm({ view })
   sinon.assert.calledWith(view.render, 'outside.authentication.login-form')
 })
 
@@ -56,12 +57,12 @@ test('login: Redirects to https://example.com/', async () => {
   sinon.assert.calledWith(response.redirect, 'https://example.com/')
 })
 
-test('logout: Redirects to https://example.com/', async () => {
+test('logout: Redirects to /', async () => {
 
   const auth = {
     logout: () => {},
   }
 
   await controller.logout({ auth, response })
-  sinon.assert.calledWith(response.redirect, 'https://example.com/')
+  sinon.assert.calledWith(response.redirect, '/')
 })

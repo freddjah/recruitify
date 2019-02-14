@@ -27,5 +27,5 @@ test('home: Renders the home page for specific role', async () => {
     }),
   }
   await controller.home({ auth, response })
-  sinon.assert.calledWith(response.redirect, `/${auth.getUser().role().fetch().name}`)
+  sinon.assert.calledWith(response.redirect, '/applicant')
 })
