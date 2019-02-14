@@ -154,7 +154,7 @@ class ApiController {
 
     const { transformAvailability, transformCompetenceProfile, transformPerson } = createTransformers(antl.currentLocale())
 
-    Logger.debug('Fetching person and relations...', { personId: params.person_id })
+    Logger.debug('Fetching person and relations...', { personId: params.personId })
     const person = await PersonRepository.findById(params.personId)
     const availabilities = await person.availabilities().fetch()
     const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
@@ -178,16 +178,16 @@ class ApiController {
   async updateStatus({ request, response, params, antl }) {
 
     const form = request.post()
-    Logger.debug('Fetching user...', { personId: params.person_id })
+    Logger.debug('Fetching user...', { personId: params.personId })
     const person = await PersonRepository.findById(params.personId)
     Logger.info('Found user')
 
-    Logger.debug('Updating status...', { personId: params.person_id })
+    Logger.debug('Updating status...', { personId: params.personId })
     await PersonRepository.update(person, {
       application_status: form.applicationStatus,
       application_reviewed_at: moment().format('YYYY-MM-DD HH:mm:ss'),
     })
-    Logger.info('Successfully updated status', { personId: params.person_id })
+    Logger.info('Successfully updated status', { personId: params.personId })
 
     return response.send({ message: antl.formatMessage('recruiter.updateFlashMessage') })
   }
