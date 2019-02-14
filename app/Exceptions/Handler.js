@@ -37,7 +37,6 @@ class ExceptionHandler extends BaseExceptionHandler {
   async handle(error, { request, response, session, view, antl }) {
 
     const isJSON = request.accepts(['html', 'json']) === 'json'
-    Logger.error(error.stack)
 
     if (error.name === 'UserNotFoundException') {
 
@@ -111,6 +110,9 @@ class ExceptionHandler extends BaseExceptionHandler {
    * @return {void}
    */
   async report(error, { request }) {
+
+    Logger.error(error.stack)
+
     return super.report(...arguments) // eslint-disable-line prefer-rest-params
   }
 }
