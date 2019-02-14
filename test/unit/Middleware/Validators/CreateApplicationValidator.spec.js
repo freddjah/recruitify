@@ -1,6 +1,5 @@
 'use strict'
 
-const sinon = require('sinon')
 const clearDatabase = require('../../../clearDatabase')
 
 const { test, beforeEach } = use('Test/Suite')('Validators/CreateApplicationValidator')
