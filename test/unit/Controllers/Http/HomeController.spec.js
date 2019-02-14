@@ -3,7 +3,7 @@
 const sinon = require('sinon')
 const clearDatabase = require('../../../clearDatabase')
 
-const { test, beforeEach } = use('Test/Suite')('AuthenticationController')
+const { test, beforeEach } = use('Test/Suite')('Controllers/Http/HomeController')
 const HomeController = use('App/Controllers/Http/HomeController')
 
 const response = { send: sinon.spy(), redirect: sinon.spy() }

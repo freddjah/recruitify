@@ -4,7 +4,7 @@ const moment = require('moment')
 
 const clearDatabase = require('../../../clearDatabase')
 
-const { test, beforeEach } = use('Test/Suite')('Validators/UpdateStatusValidator')
+const { test, beforeEach } = use('Test/Suite')('Middleware/Validators/UpdateStatusValidator')
 const UpdateStatusValidator = use('App/Middleware/Validators/UpdateStatusValidator')
 
 const Factory = use('Factory')

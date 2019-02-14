@@ -2,7 +2,7 @@
 
 const clearDatabase = require('../../../clearDatabase')
 
-const { test, beforeEach } = use('Test/Suite')('Validators/CreateApplicationValidator')
+const { test, beforeEach } = use('Test/Suite')('Middleware/Validators/CreateApplicationValidator')
 const CreateApplicationValidator = use('App/Middleware/Validators/CreateApplicationValidator')
 
 const Factory = use('Factory')

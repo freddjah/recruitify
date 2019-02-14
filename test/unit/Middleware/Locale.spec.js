@@ -3,7 +3,7 @@
 const sinon = require('sinon')
 const clearDatabase = require('../../clearDatabase')
 
-const { test, beforeEach } = use('Test/Suite')('Locale')
+const { test, beforeEach } = use('Test/Suite')('Middleware/Locale')
 const Locale = use('App/Middleware/Locale')
 
 const locale = new Locale()

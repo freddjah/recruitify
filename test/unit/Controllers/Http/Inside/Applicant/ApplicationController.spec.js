@@ -3,7 +3,7 @@
 const sinon = require('sinon')
 const clearDatabase = require('../../../../../clearDatabase')
 
-const { test, beforeEach } = use('Test/Suite')('Inside/Applicant/ApplicationController')
+const { test, beforeEach } = use('Test/Suite')('Controllers/Http/Inside/Applicant/ApplicationController')
 const ApiController = use('App/Controllers/Http/Inside/Applicant/ApplicationController')
 const PersonRepository = use('App/Repositories/PersonRepository')
 

@@ -4,7 +4,7 @@ const moment = require('moment')
 const sinon = require('sinon')
 const clearDatabase = require('../../../clearDatabase')
 
-const { test, beforeEach } = use('Test/Suite')('ApiController')
+const { test, beforeEach } = use('Test/Suite')('Controllers/Http/ApiController')
 const ApiController = use('App/Controllers/Http/ApiController')
 const Factory = use('Factory')
 const Person = use('App/Models/Person')
