@@ -2,8 +2,17 @@
 
 const Factory = use('Factory')
 const { test, trait } = use('Test/Suite')('Browser: /login')
+const clearDatabase = require('../clearDatabase')
+
+const { beforeEach } = use('Test/Suite')('Controllers/Http/Outside/AuthenticationController')
 
 trait('Test/Browser')
+
+beforeEach(async () => {
+
+  await clearDatabase()
+
+})
 
 test('Renders login page', async ({ browser, assert }) => {
 
