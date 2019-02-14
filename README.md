@@ -46,7 +46,7 @@ adonis serve --dev
 
 ## API documentation
 
-(Link to the documentation)[/API.md]
+[Link to the documentation](/API.md)
 
 ## Production
 
