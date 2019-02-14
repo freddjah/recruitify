@@ -1,37 +1,53 @@
-# Adonis fullstack application
+# Recruitify
 
-This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
+## New developer guide
 
-1. Bodyparser
-2. Session
-3. Authentication
-4. Web security middleware
-5. CORS
-6. Edge template engine
-7. Lucid ORM
-8. Migrations and seeds
+This is a guide that all new Recruitify developers must follow to setup their development environment.
 
-## Setup
+### Installing dependencies
 
-Use the adonis command to install the blueprint
+Installs all NPM dependencies
 
 ```bash
-adonis new yardstick
+npm install
 ```
 
-or manually clone the repo and then run `npm install`.
+### Starting services
 
+Starts MariaDB in a Docker container.
 
-### Migrations
+```bash
+docker-compose up -d
+```
 
-Run the following command to run startup migrations.
+### Running migrations
 
-```js
+This creates database schema.
+
+```bash
 adonis migration:run
 ```
+
+### Inserting test data
 
 Inserting test data
 
 ```bash
 mysql -u root -p -h 127.0.0.1 recruitify < database/testdata.sql
 ```
+
+### Booting HTTP server
+
+Starts the HTTP server at localhost:3333.
+
+```bash
+adonis serve --dev
+```
+
+## API documentation
+
+(Link to the documentation)[/API.md]
+
+## Production
+
+The service is deployed as an Heroku app. Please ask Fredrik for login.
