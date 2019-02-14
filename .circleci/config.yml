@@ -10,7 +10,7 @@ jobs:
           command: 'npm install'
       - run:
           name: 'Running tests'
-          command: 'ENV_PATH=.env.testing node ace test'
+          command: 'ENV_PATH=.env.testing node ace test unit'
 workflows:
   version: 2
   test:

@@ -23,7 +23,6 @@ function dateTime(timestamp) {
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
-const Hash = use('Hash')
 
 Factory.blueprint('App/Models/Availability', (faker, _, data) => ({
   person_id: data.person_id,
