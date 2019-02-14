@@ -14,7 +14,7 @@ const Availability = use('App/Models/Availability')
 const response = { send: sinon.spy() }
 const controller = new ApiController()
 
-const antl = { currentLocale: () => 'en', formatMessage: () => 'my message' }
+const antl = { currentLocale: () => 'en', formatMessage: id => id }
 
 beforeEach(async () => {
 
@@ -44,13 +44,13 @@ test('getCompetences: Responds with competences', async () => {
 
 test('getStatuses: Responds with statuses', async () => {
 
-  await controller.getStatuses({ response })
+  await controller.getStatuses({ response, antl })
 
   sinon.assert.calledWith(response.send, {
     statuses: {
-      unhandled: 'Unhandled',
-      approved: 'Approved',
-      rejected: 'Rejected',
+      unhandled: 'recruiter.unhandled',
+      accepted: 'recruiter.accepted',
+      rejected: 'recruiter.rejected',
     },
   })
 })
@@ -93,7 +93,7 @@ test('register: a person was created and responds with message', async ({ assert
   assert.equal(person.surname, 'Andersson')
 
   sinon.assert.calledWith(response.send, {
-    message: 'my message',
+    message: 'authentication.registerDoneApi',
   })
 })
 
@@ -138,7 +138,7 @@ test('saveApplication: creates an application', async ({ assert }) => {
   assert.equal(availability.to_date, '2019-01-31')
 
   sinon.assert.calledWith(response.send, {
-    message: 'my message',
+    message: 'applicant.flashMessage',
   })
 })
 
@@ -197,6 +197,6 @@ test('updateStatus: Updates application data and returns response message', asyn
   assert.equal(person.application_reviewed_at, currentTime)
 
   sinon.assert.calledWith(response.send, {
-    message: 'my message',
+    message: 'recruiter.updateFlashMessage',
   })
 })

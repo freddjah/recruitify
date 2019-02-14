@@ -4,6 +4,15 @@
 
 This is a guide that all new Recruitify developers must follow to setup their development environment.
 
+### Prerequisites
+
+Download and install the following applications
+
+* Node v10
+* Docker
+* Mysql client
+
+
 ### Installing dependencies
 
 Installs all NPM dependencies
@@ -42,6 +51,14 @@ Starts the HTTP server at localhost:3333.
 
 ```bash
 adonis serve --dev
+```
+
+### Running tests
+
+Runs both unit and functional tests.
+
+```bash
+adonis tests
 ```
 
 ## API documentation

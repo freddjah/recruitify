@@ -5,6 +5,7 @@ const moment = require('moment')
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
 const RoleRepository = use('App/Repositories/RoleRepository')
+const Role = use('App/Models/Role')
 const createTransformers = use('App/transformers')
 const saveApplication = use('App/Jobs/saveApplication')
 const Logger = use('Logger')
@@ -39,12 +40,12 @@ class ApiController {
    * @param {Object} ctx.response - Adonis response
    * @returns {JSON} - Statuses
    */
-  async getStatuses({ response }) {
+  async getStatuses({ response, antl }) {
     response.send({
       statuses: {
-        unhandled: 'Unhandled',
-        approved: 'Approved',
-        rejected: 'Rejected',
+        unhandled: antl.formatMessage('recruiter.unhandled'),
+        accepted: antl.formatMessage('recruiter.accepted'),
+        rejected: antl.formatMessage('recruiter.rejected'),
       },
     })
   }
@@ -156,6 +157,13 @@ class ApiController {
 
     Logger.debug('Fetching person and relations...', { personId: params.personId })
     const person = await PersonRepository.findById(params.personId)
+    const role = await person.role().fetch()
+
+    if (role.name === Role.RECRUITER_ROLE_NAME) {
+      Logger.warning('Specified user is not an applicant, showing error to client', { personId: params.personId })
+      return response.status(404).send({ error: antl.formatMessage('errorpage.404Text') })
+    }
+
     const availabilities = await person.availabilities().fetch()
     const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
     Logger.info(`Found person with ${availabilities.rows.length} availabilities and ${competenceProfiles.rows.length} competence profiles`)
@@ -180,6 +188,13 @@ class ApiController {
     const form = request.post()
     Logger.debug('Fetching user...', { personId: params.personId })
     const person = await PersonRepository.findById(params.personId)
+    const role = await person.role().fetch()
+
+    if (role.name === Role.RECRUITER_ROLE_NAME) {
+      Logger.warning('Specified user is not an applicant, showing error to client', { personId: params.personId })
+      return response.status(404).send({ error: antl.formatMessage('errorpage.404Text') })
+    }
+
     Logger.info('Found user')
 
     Logger.debug('Updating status...', { personId: params.personId })

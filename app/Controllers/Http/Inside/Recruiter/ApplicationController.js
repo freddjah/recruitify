@@ -4,6 +4,7 @@ const moment = require('moment')
 
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const PersonRepository = use('App/Repositories/PersonRepository')
+const Role = use('App/Models/Role')
 const RoleRepository = use('App/Repositories/RoleRepository')
 const Logger = use('Logger')
 
@@ -66,10 +67,17 @@ class ApplicationController {
    * @param {Object} ctx.request - Adonis request
    * @param {Object} params
    */
-  async view({ view, params, request }) {
+  async view({ view, params, request, response }) {
 
     Logger.debug('Fetching person and relations...', { personId: params.person_id })
     const person = await PersonRepository.findById(params.personId)
+    const role = await person.role().fetch()
+
+    if (role.name === Role.RECRUITER_ROLE_NAME) {
+      Logger.warning('Specified user is not an applicant, showing error to client', { personId: params.personId })
+      return response.status(404).send(view.render('errors.404'))
+    }
+
     const availabilities = await person.availabilities().fetch()
     const competenceProfiles = await person.competenceProfiles().with('competence').fetch()
     Logger.info(`Found person with ${availabilities.rows.length} availabilities and ${competenceProfiles.rows.length} competence profiles`)
@@ -88,11 +96,17 @@ class ApplicationController {
    * @param {Object} ctx.session - Adonis session
    * @param {Object} ctx.antl - Adonis antl
    */
-  async updateStatus({ request, response, params, session, antl }) {
+  async updateStatus({ request, response, params, session, antl, view }) {
 
     const form = request.post()
     Logger.debug('Fetching user...', { personId: params.person_id })
     const person = await PersonRepository.findById(params.personId)
+    const role = await person.role().fetch()
+
+    if (role.name === Role.RECRUITER_ROLE_NAME) {
+      Logger.warning('Specified user is not an applicant, showing error to client', { personId: params.personId })
+      return response.status(404).send(view.render('errors.404'))
+    }
     Logger.info('Found user')
 
     Logger.debug('Updating status...', { personId: params.person_id })
