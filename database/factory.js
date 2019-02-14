@@ -52,7 +52,7 @@ Factory.blueprint('App/Models/Person', async (faker, _, { password = '12345', ro
     surname: faker.last(),
     ssn: `${date(faker.timestamp(), 'YYYYMMDD')}-${faker.integer({ min: 1000, max: 9999 })}`,
     email: faker.email(),
-    password: await Hash.make(password),
+    password,
     role_id: roleId,
     username: faker.username(),
     application_date: date(faker.timestamp()),
