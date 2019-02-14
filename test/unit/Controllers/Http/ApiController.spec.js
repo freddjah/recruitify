@@ -142,9 +142,10 @@ test('saveApplication: creates an application', async ({ assert }) => {
   })
 })
 
-test('searchResults: Responds with persons and paginator', async ({ assert }) => {
+test('searchResults: Responds with persons (applicants only) and paginator', async ({ assert }) => {
 
   await Factory.model('App/Models/Person').createMany(5)
+  await Factory.model('App/Models/Person').create({ role: 'recruiter' })
 
   const request = { get: () => ({}) }
   await controller.searchResults({ antl, request, response })
@@ -154,7 +155,48 @@ test('searchResults: Responds with persons and paginator', async ({ assert }) =>
   assert.deepEqual(answer.paginator, { total: 5, perPage: 10, page: 1, lastPage: 1 })
 })
 
-test('view', async ({ assert }) => {
+test('view: Responds with person, availabilities and competence profiles', async ({ assert }) => {
 
+  const person = await Factory.model('App/Models/Person').create()
+  const { person_id } = person // eslint-disable-line camelcase
+  await Factory.model('App/Models/Availability').createMany(3, { person_id })
+  const competences = await Factory.model('App/Models/Competence').createMany(2)
+  await Factory.model('App/Models/CompetenceProfile').create({
+    competence_id: competences[0].competence_id,
+    person_id,
+  })
+  await Factory.model('App/Models/CompetenceProfile').create({
+    competence_id: competences[1].competence_id,
+    person_id,
+  })
 
+  const params = { personId: person_id }
+  await controller.view({ params, response, antl })
+
+  const call = response.send.args[0][0]
+  assert.equal(call.person.person_id, person_id)
+  assert.lengthOf(call.availabilities, 3)
+  assert.lengthOf(call.competenceProfiles, 2)
+})
+
+test('updateStatus: Updates application data and returns response message', async ({ assert }) => {
+
+  const person = await Factory.model('App/Models/Person').create({
+    applicationStatus: 'unhandled',
+  })
+  const request = {
+    post: () => ({ applicationStatus: 'rejected' }),
+  }
+  const params = { personId: person.person_id }
+
+  await controller.updateStatus({ request, response, params, antl })
+
+  await person.reload()
+  const currentTime = moment().format('YYYY-MM-DD HH:mm:ss')
+  assert.equal(person.application_status, 'rejected')
+  assert.equal(person.application_reviewed_at, currentTime)
+
+  sinon.assert.calledWith(response.send, {
+    message: 'my message',
+  })
 })

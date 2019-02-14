@@ -43,7 +43,7 @@ Factory.blueprint('App/Models/CompetenceProfile', (faker, _, data) => ({
   years_of_experience: faker.year(),
 }))
 
-Factory.blueprint('App/Models/Person', async (faker, _, { password = '12345', role = 'applicant' } = {}) => {
+Factory.blueprint('App/Models/Person', async (faker, _, { password = '12345', role = 'applicant', applicationStatus = 'unhandled' } = {}) => {
 
   const roleId = role === 'recruiter' ? 1 : 2
 
@@ -56,7 +56,7 @@ Factory.blueprint('App/Models/Person', async (faker, _, { password = '12345', ro
     role_id: roleId,
     username: faker.username(),
     application_date: date(faker.timestamp()),
-    application_status: faker.pickone(['unhandled', 'accepted', 'rejected']),
+    application_status: applicationStatus,
     application_reviewed_at: dateTime(faker.timestamp()),
   }
 })
