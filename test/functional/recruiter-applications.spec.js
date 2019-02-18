@@ -1,5 +1,6 @@
 'use strict'
 
+const moment = require('moment')
 const clearDatabase = require('../clearDatabase')
 
 const Factory = use('Factory')
@@ -38,29 +39,33 @@ test('Renders applications search form', async ({ browser, assert }) => {
   assert.isTrue(hasNameInput)
 }).timeout(10000)
 
-test('Renders applications search results', async ({ browser, assert }) => {
+test('Returns and renders search results', async ({ browser, assert }) => {
+  const fromDate = moment()
+  const toDate = moment().add(10, 'days')
+
+  // Create all database entries needed
   const person = await Factory.model('App/Models/Person').create()
   const competence = await Factory.model('App/Models/Competence').create()
-  const availability = await Factory.model('App/Models/Availability').create({ person_id: person.person_id })
-  const competenceProfile = await Factory.model('App/Models/CompetenceProfile').create({
+  await Factory.model('App/Models/Availability').create({
+    person_id: person.person_id,
+    from: fromDate.unix(),
+    to: toDate.unix(),
+  })
+  await Factory.model('App/Models/CompetenceProfile').create({
     person_id: person.person_id,
     competence_id: competence.competence_id,
   })
 
   const page = await logInRecruiter(browser)
 
-  console.log(person.toJSON())
-  console.log(availability.toJSON())
-  console.log(competenceProfile.toJSON())
-
   await page
-    .type('[name="from"]', '')
-    .type('[name="to"]', '')
-    // .type('[name="date"]', person.application_date)
     .submitForm('form')
     .waitForNavigation()
 
-  const html = await page.getHtml()
+  const hasOneEntryInSearchResult = await page.hasElement('tbody tr')
+  const hasLinkInEntry = await page.hasElement('tbody tr td a')
 
-  console.log(page)
+  // Verify that search result table has been populated
+  assert.isTrue(hasOneEntryInSearchResult)
+  assert.isTrue(hasLinkInEntry)
 }).timeout(10000)

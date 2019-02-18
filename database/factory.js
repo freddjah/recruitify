@@ -10,6 +10,10 @@ function dateTime(timestamp) {
   return moment(timestamp * 1000).format('YYYY-MM-DD HH:mm:ss')
 }
 
+function dateISO(timestamp) {
+  return new Date(timestamp * 1000)
+}
+
 /*
 |--------------------------------------------------------------------------
 | Factory
@@ -26,8 +30,8 @@ const Factory = use('Factory')
 
 Factory.blueprint('App/Models/Availability', (faker, _, data) => ({
   person_id: data.person_id,
-  from_date: date(faker.timestamp()),
-  to_date: date(faker.timestamp()),
+  from_date: date(data.from || faker.timestamp()),
+  to_date: date(data.to || faker.timestamp()),
 }))
 
 Factory.blueprint('App/Models/Competence', faker => ({
@@ -54,7 +58,7 @@ Factory.blueprint('App/Models/Person', async (faker, _, { password = '12345', ro
     password,
     role_id: roleId,
     username: faker.username(),
-    application_date: date(faker.timestamp()),
+    application_date: dateISO(faker.timestamp()),
     application_status: applicationStatus,
     application_reviewed_at: dateTime(faker.timestamp()),
   }
