@@ -10,13 +10,25 @@
         <div class="alert alert-success">{{ flashMessage('confirmation') }}</div>
       @endif
 
-      <h2>{{ antl.formatMessage('applicant.expertiseHeader') }}</h2>
-      <ul id="expertises"></ul>
+      <h2 style="margin-top: 32px">{{ antl.formatMessage('applicant.expertiseHeader') }}</h2>
+      <table class="table" style="margin-top: 32px">
+        <thead>
+          <tr>
+            <th style="width:50%" scope="col"> Expertise</th>
+            <th scope="col"> Years of Experience</th>
+          </tr>
+        </thead>
+        <tbody id="expertises">
+          <tr class="empty-state">
+            <td colspan="2"><em>Add an expertise...</em></td>
+          </tr>
+        </tbody>
+      </table>
 
-      <h4>{{ antl.formatMessage('applicant.addExpertiseHeader') }}</h4>
+      <h4 style="margin-top: 32px">{{ antl.formatMessage('applicant.addExpertiseHeader') }}</h4>
       <div class="row">
         <div class="form-group col-md-6">
-          <label for="competence">{{ antl.formatMessage('applicant.competencenHeader') }}</label>
+          <label for="competence">{{ antl.formatMessage('applicant.competenceHeader') }}</label>
           <select class="form-control" id="competence">
             @each(competence in competences.rows)
             <option value="{{ competence.competence_id }}">{{ competence['name_' + currentLocale] }}</option>
@@ -35,9 +47,21 @@
       </div>
       @!component('components.form-error', hasError=hasErrorFor('expertises'), error=getErrorFor('expertises'))
 
-      <h2>{{ antl.formatMessage('applicant.availabilityHeader') }}</h2>
-      <ul id="availabilities"></ul>
-      <h4>{{ antl.formatMessage('applicant.addAvailabilityHeader') }}</h4>
+      <h2 style="margin-top: 32px">{{ antl.formatMessage('applicant.availabilityHeader') }}</h2>
+      <table class="table" style="margin-top: 32px">
+          <thead>
+            <tr>
+              <th style="width:50%" scope="col"> Available from</th>
+              <th scope="col"> To</th>
+            </tr>
+          </thead>
+          <tbody id="availabilities">
+              <tr class="empty-state">
+                  <td colspan="2"><em>Add availability dates...</em></td>
+                </tr>
+          </tbody>
+        </table>
+      <h4 style="margin-top: 32px">{{ antl.formatMessage('applicant.addAvailabilityHeader') }}</h4>
       <div class="row">
         <div class="form-group col-md-5">
           <label for="availability_from">{{ antl.formatMessage('applicant.fromHeader') }}</label>
