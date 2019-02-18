@@ -6,8 +6,8 @@ function date(timestamp, format = 'YYYY-MM-DD') {
   return moment(timestamp * 1000).format(format)
 }
 
-function dateTime(timestamp) {
-  return moment(timestamp * 1000).format('YYYY-MM-DD HH:mm:ss')
+function dateISO(timestamp) {
+  return new Date(timestamp * 1000)
 }
 
 /*
@@ -23,12 +23,11 @@ function dateTime(timestamp) {
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
-const Hash = use('Hash')
 
 Factory.blueprint('App/Models/Availability', (faker, _, data) => ({
   person_id: data.person_id,
-  from_date: date(faker.timestamp()),
-  to_date: date(faker.timestamp()),
+  from_date: dateISO(data.from || faker.timestamp()),
+  to_date: dateISO(data.to || faker.timestamp()),
 }))
 
 Factory.blueprint('App/Models/Competence', faker => ({
@@ -52,11 +51,11 @@ Factory.blueprint('App/Models/Person', async (faker, _, { password = '12345', ro
     surname: faker.last(),
     ssn: `${date(faker.timestamp(), 'YYYYMMDD')}-${faker.integer({ min: 1000, max: 9999 })}`,
     email: faker.email(),
-    password: await Hash.make(password),
+    password,
     role_id: roleId,
     username: faker.username(),
-    application_date: date(faker.timestamp()),
+    application_date: dateISO(faker.timestamp()),
     application_status: applicationStatus,
-    application_reviewed_at: dateTime(faker.timestamp()),
+    application_reviewed_at: dateISO(faker.timestamp()),
   }
 })
