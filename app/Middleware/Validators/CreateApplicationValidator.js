@@ -56,6 +56,10 @@ class CreateApplicationValidator extends Validator {
       return errors
     }
 
+    if (form.availabilityFrom.filter(from => from === '').length > 0 || form.availabilityTo.filter(to => to === '').length > 0) {
+      errors.push(this.customError('availabilities', 'empty'))
+    }
+
     if (form.expertiseCompetenceId.length === 0 || form.expertiseYearsOfExperience.length === 0) {
       errors.push(this.customError('expertises', 'empty'))
     }
@@ -72,6 +76,9 @@ class CreateApplicationValidator extends Validator {
       errors.push(this.customError('availabilities', 'length'))
     }
 
+    if (errors.length > 0) {
+      return errors
+    }
     Logger.debug('Fetching competences with ids... ', { competenceIds: form.expertiseCompetenceId })
     const competences = await CompetenceRepository.getCompetenceIds(form.expertiseCompetenceId)
     Logger.info(`Successfully fetched ${competences.rows.length} competences`)

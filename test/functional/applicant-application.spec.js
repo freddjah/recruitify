@@ -52,8 +52,6 @@ test('Send application succeeds', async ({ browser, assert }) => {
     .type('select#competence', competence.name_en)
     .type('input#years_of_experience', '2')
     .click('button#add_expertise')
-    .type('input#availability_from', '2019-02-15')
-    .type('input#availability_to', '2019-02-20')
     .click('button#add_availability')
     .submitForm('form')
     .waitForNavigation()

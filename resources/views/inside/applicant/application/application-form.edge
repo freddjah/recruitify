@@ -65,11 +65,11 @@
       <div class="row">
         <div class="form-group col-md-5">
           <label for="availability_from">{{ antl.formatMessage('applicant.fromHeader') }}</label>
-          <input type="date" class="form-control" id="availability_from">
+          <input type="date" class="form-control" id="availability_from" value="{{ todaysDate }}">
         </div>
         <div class="form-group col-md-5">
           <label for="availability_to">{{ antl.formatMessage('applicant.toHeader') }}</label>
-          <input type="date" class="form-control" id="availability_to">
+          <input type="date" class="form-control" id="availability_to" value="{{ todaysDate }}">
         </div>
         <div class="col-md-2">
           <button id="add_availability" class="btn btn-secondary" style="margin-top: 32px">{{ antl.formatMessage('applicant.addAvailabilityButton') }}</button>

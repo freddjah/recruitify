@@ -1,5 +1,7 @@
 'use strict'
 
+const moment = require('moment')
+
 const CompetenceRepository = use('App/Repositories/CompetenceRepository')
 const saveApplication = use('App/Jobs/saveApplication')
 const Logger = use('Logger')
@@ -27,7 +29,10 @@ class ApplicationController {
     Logger.debug('Fetching competences...')
     const competences = await CompetenceRepository.getAll()
     Logger.info(`${competences.rows.length} competences was fetched`)
-    return view.render('inside.applicant.application.application-form', { competences })
+
+    const todaysDate = moment().format('YYYY-MM-DD')
+
+    return view.render('inside.applicant.application.application-form', { competences, todaysDate })
   }
 
   /**
