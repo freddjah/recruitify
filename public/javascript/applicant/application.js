@@ -11,7 +11,7 @@ $(() => {
 
     const yearsOfExperience = $('#years_of_experience').val()
 
-    $('#expertises').append(`<tr> <td>${competenceName}</td> <td>${yearsOfExperience} years</td> </tr>`)
+    $('#expertises').append(`<tr> <td>${competenceName}</td> <td>${yearsOfExperience}</td> </tr>`)
     $('form').append(`<input type="hidden" name="expertiseCompetenceId[]" value="${competenceId}">`)
     $('form').append(`<input type="hidden" name="expertiseYearsOfExperience[]" value="${yearsOfExperience}">`)
   })
