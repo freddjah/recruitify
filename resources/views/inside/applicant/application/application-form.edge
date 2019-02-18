@@ -14,13 +14,13 @@
       <table class="table" style="margin-top: 32px">
         <thead>
           <tr>
-            <th style="width:50%" scope="col"> Expertise</th>
-            <th scope="col"> Years of Experience</th>
+            <th style="width:50%" scope="col"> {{ antl.formatMessage('applicant.expertiseHeader') }}</th>
+            <th scope="col"> {{ antl.formatMessage('applicant.yearsOfExperienceHeader') }}</th>
           </tr>
         </thead>
         <tbody id="expertises">
           <tr class="empty-state">
-            <td colspan="2"><em>Add an expertise...</em></td>
+            <td colspan="2"><em>{{ antl.formatMessage('applicant.addExpertiseHeader') }}...</em></td>
           </tr>
         </tbody>
       </table>
@@ -51,13 +51,13 @@
       <table class="table" style="margin-top: 32px">
           <thead>
             <tr>
-              <th style="width:50%" scope="col"> Available from</th>
-              <th scope="col"> To</th>
+              <th style="width:50%" scope="col">{{ antl.formatMessage('applicant.fromHeader') }}</th>
+              <th scope="col">{{ antl.formatMessage('applicant.toHeader') }}</th>
             </tr>
           </thead>
           <tbody id="availabilities">
               <tr class="empty-state">
-                  <td colspan="2"><em>Add availability dates...</em></td>
+                  <td colspan="2"><em>{{ antl.formatMessage('applicant.addAvailabilityHeader') }}...</em></td>
                 </tr>
           </tbody>
         </table>
