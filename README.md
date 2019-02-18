@@ -31,7 +31,7 @@ docker-compose up -d
 
 ### Running migrations
 
-This creates database schema.
+This creates database schema. Make sure that you have a database called `recruitify`. If not, add it.
 
 ```bash
 adonis migration:run
@@ -58,7 +58,7 @@ adonis serve --dev
 Runs both unit and functional tests.
 
 ```bash
-adonis tests
+adonis test
 ```
 
 ## API documentation
@@ -68,3 +68,4 @@ adonis tests
 ## Production
 
 The service is deployed as an Heroku app. Please ask Fredrik for login.
+http://recruitify.herokuapp.com
